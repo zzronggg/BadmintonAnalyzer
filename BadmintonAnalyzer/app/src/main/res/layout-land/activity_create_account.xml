@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".act.CreateAccountActivity">
+
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:fillViewport="true">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="@string/create_acc_create_page"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" android:id="@+id/tv_create_acc"
+                    android:gravity="center" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/taipei_sans_regular"
+                    android:textSize="36sp" android:textStyle="bold" android:textColor="@color/black"
+                    app:layout_constraintHeight_percent="0.2" app:layout_constraintVertical_bias="0.01999998"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.5"
+                    android:id="@+id/create_sub" app:layout_constraintTop_toBottomOf="@id/tv_create_acc"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.13">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tf_create_username"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintWidth_percent="0.75"
+                        app:layout_constraintHeight_percent="0.25"
+                        app:boxCornerRadiusBottomEnd="15dp"
+                        app:boxCornerRadiusBottomStart="15dp"
+                        app:boxCornerRadiusTopEnd="15dp"
+                        app:boxCornerRadiusTopStart="15dp"
+                        android:hint="@string/username_login"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textColorHint="@color/input_hint"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
+                        app:startIconTint="@color/icon"
+                        app:startIconDrawable="@drawable/ic_round_account"
+                        app:layout_constraintBottom_toTopOf="@+id/tf_create_email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/taipei_sans_regular" android:textSize="18sp"
+                            android:textColor="@color/black" android:inputType="text"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tf_create_email"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintWidth_percent="0.75"
+                        app:layout_constraintHeight_percent="0.25"
+                        app:boxCornerRadiusBottomEnd="15dp"
+                        app:boxCornerRadiusBottomStart="15dp"
+                        app:boxCornerRadiusTopEnd="15dp"
+                        app:boxCornerRadiusTopStart="15dp"
+                        android:hint="@string/email"
+                        android:textColorHint="@color/input_hint"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
+                        app:startIconTint="@color/icon"
+                        app:startIconDrawable="@drawable/ic_baseline_email"
+                        app:layout_constraintTop_toBottomOf="@id/tf_create_username"
+                        app:layout_constraintBottom_toTopOf="@+id/tf_create_password">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/taipei_sans_regular"
+                            android:textSize="18sp" android:textColor="@color/black"
+                            android:inputType="textEmailAddress"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@."/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tf_create_password"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintWidth_percent="0.75"
+                        app:layout_constraintHeight_percent="0.25"
+                        app:boxCornerRadiusBottomEnd="15dp"
+                        app:boxCornerRadiusBottomStart="15dp"
+                        app:boxCornerRadiusTopEnd="15dp"
+                        app:boxCornerRadiusTopStart="15dp"
+                        android:hint="@string/password_login"
+                        android:textColorHint="@color/input_hint"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
+                        app:startIconTint="@color/icon"
+                        app:startIconDrawable="@drawable/ic_baseline_lock"
+                        app:passwordToggleTint="@color/icon"
+                        app:passwordToggleDrawable="@drawable/password_toggle_selector" app:passwordToggleEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@id/tf_create_email"
+                        app:layout_constraintBottom_toTopOf="@+id/tf_create_confirm_password">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textPassword" android:fontFamily="@font/taipei_sans_regular"
+                            android:textSize="18sp" android:textColor="@color/black"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tf_create_confirm_password"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintWidth_percent="0.75"
+                        app:layout_constraintHeight_percent="0.25"
+                        app:boxCornerRadiusBottomEnd="15dp"
+                        app:boxCornerRadiusBottomStart="15dp"
+                        app:boxCornerRadiusTopEnd="15dp"
+                        app:boxCornerRadiusTopStart="15dp"
+                        android:hint="@string/confirm_pw"
+                        android:textColorHint="@color/input_hint"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
+                        app:startIconTint="@color/icon"
+                        app:startIconDrawable="@drawable/ic_baseline_check_circle"
+                        app:passwordToggleTint="@color/icon"
+                        app:passwordToggleDrawable="@drawable/password_toggle_selector" app:passwordToggleEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@id/tf_create_password"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textPassword" android:fontFamily="@font/taipei_sans_regular"
+                            android:textSize="18sp" android:textColor="@color/black"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <Button
+                    android:text="@string/create_acc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/btn_reset_go_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:backgroundTint="@color/login_btn" android:textColor="@color/black"
+                    app:layout_constraintWidth_percent="0.75" android:fontFamily="@font/taipei_sans_regular"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@+id/create_sub"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                    android:text="@string/back_to_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tv_create_go_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/hint_forgot_pw"
+                    android:fontFamily="@font/taipei_sans_regular"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/btn_reset_go_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

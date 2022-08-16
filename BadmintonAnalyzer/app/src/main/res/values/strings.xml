@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">BadmintonAnalyzer</string>
+
+    <!-- Login Page   -->
+    <string name="main_logo">MAIN_LOGO</string>
+    <string name="username_login">使用者名稱</string>
+    <string name="password_login">密碼</string>
+    <string name="forgot_pw">忘記密碼?</string>
+    <string name="login">登入</string>
+    <string name="sep_login">或</string>
+    <string name="create_acc_login_page">建立您的帳戶</string>
+
+    <!-- Create Account Page   -->
+    <string name="create_acc_create_page">創建您的帳戶</string>
+    <string name="create_acc">建立帳戶</string>
+    <string name="confirm_pw">再次確認您的密碼</string>
+
+    <!-- Create Success Page-->
+    <string name="create_success">成功建立帳戶</string>
+    <string name="create_success_msg">您已成功建立帳戶，可回到登入頁面立即登入，
+        <br>歡迎您使用本軟體的服務！</br>
+    </string>
+
+    <!-- Search Video Page-->
+    <string name="btn_search">搜尋</string>
+    <string name="hint_keyword">關鍵字</string>
+    <string name="fab_download_vid">Download</string>
+    <string name="back">back</string>
+
+    <!-- Reset Password Page-->
+    <string name="reset_pw">重新設定密碼</string>
+    <string name="email">電子郵件地址</string>
+    <string name="hint_reset">我們將寄信到您的信箱，請至您的信箱收信並重新設定密碼，謝謝。</string>
+    <string name="confirm_submit">確認送出</string>
+    <string name="back_to_login">
+        <u>返回登入</u>
+    </string>
+
+    <!-- Reset Success Page-->
+    <string name="reset_success">密碼重置成功</string>
+    <string name="hint_reset_mail">
+        <br>我們已將密碼重置信件寄到您的信箱，</br>
+        <br>請您儘快察看信箱並回信，讓我們為您處理，謝謝！</br>
+    </string>
+    <string name="email_logo">EMAIL_LOGO</string>
+
+    <!-- Youtube Player Page-->
+    <string name="hint_download_vid">
+        <u>點擊按鈕以分析此影片</u>
+    </string>
+
+    <!-- Exo Main Page   -->
+    <string name="video_data">影片資料</string>
+    <string name="section_selection">段落選擇</string>
+    <string name="integrity_analysis">整體分析</string>
+
+
+    <!-- Top Action Bar-->
+    <string name="recently_view">近期觀看</string>
+    <string name="search">尋找影片</string>
+    <string name="favorite">Favorite</string>
+    <string name="content_description_favorite">Favorite2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

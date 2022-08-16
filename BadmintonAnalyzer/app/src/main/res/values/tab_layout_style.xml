@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/taipei_regular</item>
+    </style>
+
+</resources>

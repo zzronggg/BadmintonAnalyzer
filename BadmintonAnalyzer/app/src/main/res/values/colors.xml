@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="egg_yellow">#FCEB8B</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#757575</color>
+
+    <color name="icon">#736E6E</color>
+    <color name="input_hint">#9E9E9E</color>
+    <color name="mtrl_textinput_default_box_stroke_color"
+           xmlns:tools="http://schemas.android.com/tools"
+           tools:override="true" >#FF000000</color>
+
+    <color name="hint_forgot_pw">#008FB1</color>
+    <color name="login_btn">#FBE251</color>
+    <color name="create_acc_btn">#607D8B</color>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".act.YouTubeActivity" android:background="@color/black">
+
+    <com.zzrong.badminton_analyzer.func.MovableFloatingActionButton
+            android:id="@+id/fab_youtube_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fab_download_vid"
+            android:src="@drawable/ic_baseline_cloud_download"
+            app:backgroundTint="@color/login_btn"
+            app:tint="@color/create_acc_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.72"
+            app:layout_constraintHorizontal_bias="0.91" app:fabCustomSize="48dp" app:maxImageSize="30dp"/>
+    <TextView
+            android:text="@string/hint_download_vid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tv_hint_download"
+            android:textColor="@color/login_btn"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.72" android:textSize="14sp"/>
+    <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/yt_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+    >
+    </com.google.android.youtube.player.YouTubePlayerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
