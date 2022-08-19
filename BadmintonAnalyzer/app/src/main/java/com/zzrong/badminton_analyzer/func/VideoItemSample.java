@@ -79,7 +79,7 @@ public class VideoItemSample {
     public static ArrayList<String> dataFragSample(){
         lst2 = new ArrayList<>();
         //title;score;classify;game-date;upload-date
-        lst2.add("YONEX All England 2022");
+        lst2.add("YONEX All England 2022YONEX All England 2022YONEX All England 2022YONEX All Eng");
         lst2.add("21：10 / 21：15");
         lst2.add("周天成");
         lst2.add("2022/03/19");

@@ -26,37 +26,38 @@
     <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/exo_viewer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exo_main_bar_layout"
-            app:layout_constraintHeight_percent="0.28"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"
     >
 
     </com.google.android.exoplayer2.ui.StyledPlayerView>
-    <LinearLayout
-            android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@id/exo_viewer"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/linearLayout" app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@id/exo_viewer" app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tab_main"
                 app:tabTextAppearance="@style/TabText"
-                />
-        <androidx.viewpager2.widget.ViewPager2
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0" tools:ignore="SpeakableTextPresentCheck"/>
+        <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
-                android:layout_height="0dp" android:id="@+id/pager_main"
-                android:layout_weight="1">
-
-        </androidx.viewpager2.widget.ViewPager2>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:name="com.zzrong.badminton_analyzer.frag.VideoDataFragment"
+                android:id="@+id/frag_view"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/tab_main"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

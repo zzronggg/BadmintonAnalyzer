@@ -15,4 +15,5 @@ public class PartSelectionFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_part_selection, container, false);
     }
+
 }

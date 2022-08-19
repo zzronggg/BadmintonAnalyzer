@@ -53,10 +53,19 @@
         <entry key="..\:/coding_workspace/BadmintonAnalyzer/app/src/main/res/menu/search_top_bar.xml" value="0.28854166666666664" />
         <entry key="..\:/coding_workspace/BadmintonAnalyzer/app/src/main/res/menu/top_app_bar.xml" value="0.264" />
         <entry key="..\:/coding_workspace/BadmintonAnalyzer/app/src/main/res/mipmap-anydpi-v26/ic_banner.xml" value="0.23148148148148148" />
-        <entry key="app/src/main/res/layout/activity_exoplayer.xml" value="0.44498992919921887" />
+        <entry key="app/src/main/res/drawable/password_toggle_selector.xml" value="0.26" />
+        <entry key="app/src/main/res/drawable/straight_line_horizontal.xml" value="0.26" />
+        <entry key="app/src/main/res/layout-land/activity_create_account.xml" value="0.2" />
+        <entry key="app/src/main/res/layout-land/activity_login.xml" value="0.26759185791015627" />
+        <entry key="app/src/main/res/layout-land/activity_reset_pw.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_exoplayer.xml" value="0.27630615234375" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.29635416666666664" />
+        <entry key="app/src/main/res/layout/activity_reset_pw.xml" value="0.35555555555555557" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/fragment_analysis.xml" value="0.3109375" />
-        <entry key="app/src/main/res/layout/fragment_part_selection.xml" value="0.12182971014492754" />
-        <entry key="app/src/main/res/layout/fragment_video_data.xml" value="0.2937993367513021" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/layout/fragment_part_selection.xml" value="0.2948628522347713" />
+        <entry key="app/src/main/res/layout/fragment_video_data.xml" value="0.34983978271484373" />
       </map>
     </option>
   </component>
