@@ -37,12 +37,7 @@ public class RecentlyViewActivity extends AppCompatActivity {
     }
 
     public void applyListener(){
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFAB(view);
-            }
-        });
+        fab.setOnClickListener(view -> clickFAB(view));
     }
 
     protected void createRecyclerView(){

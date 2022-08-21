@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class ServerVideoAdapter extends RecyclerView.Adapter<ServerVideoAdapter.ViewHolder> {
 
-    private ArrayList<VideoItem> itemList;
-    private Context context;
+    private final ArrayList<VideoItem> itemList;
+    private final Context context;
 
     public ServerVideoAdapter(Context context, ArrayList<VideoItem> lst){
         this.context = context;
@@ -62,8 +62,8 @@ public class ServerVideoAdapter extends RecyclerView.Adapter<ServerVideoAdapter.
         TextView textId;
         ViewHolder(View itemView) {
             super(itemView);
-            imageId = (ImageView) itemView.findViewById(R.id.imageId);
-            textId = (TextView) itemView.findViewById(R.id.textId);
+            imageId = itemView.findViewById(R.id.imageId);
+            textId = itemView.findViewById(R.id.textId);
         }
     }
 

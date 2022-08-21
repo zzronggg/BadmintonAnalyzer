@@ -78,12 +78,7 @@ public class SubExoPlayer extends AppCompatActivity {
 
     private void setBar(){
         MaterialToolbar bar = findViewById(R.id.exo_main_bar);
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        bar.setNavigationOnClickListener(v -> finish());
     }
     private void prepInfo(){
         //get data from prev. activity

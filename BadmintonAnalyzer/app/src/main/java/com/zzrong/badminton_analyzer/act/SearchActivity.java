@@ -39,29 +39,21 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void setListener(){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                videoItems.clear();
-                search(view);
+        btn.setOnClickListener(view -> {
+            videoItems.clear();
+            search(view);
 //                fakeSearch(view);
-                if(videoItems.size() == 0 ){
-                    Toast toast = Toast.makeText(SearchActivity.this, "No Result, Please try another keyword that is relevant to badminton", Toast.LENGTH_LONG);
-                    toast.show();
-                }
+            if(videoItems.size() == 0 ){
+                Toast toast = Toast.makeText(SearchActivity.this, "No Result, Please try another keyword that is relevant to badminton", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
 
     public void setViewModel(){
-        model.getItems().observe(this, new Observer<ArrayList<VideoItem>>() {
-
-            @Override
-            public void onChanged(ArrayList<VideoItem> videoItems) {
-                Log.d("ModelViewState: ","detect change");
-                createRecyclerView();
-            }
-
+        model.getItems().observe(this, videoItems -> {
+            Log.d("ModelViewState: ","detect change");
+            createRecyclerView();
         });
         createRecyclerView();
     }
@@ -70,10 +62,7 @@ public class SearchActivity extends AppCompatActivity {
         String kw = ((com.google.android.material.textfield.TextInputEditText)findViewById(R.id.etSearch)).getText().toString();
         Search s = new Search();
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() { s.fetch(kw); }
-        };
+        Runnable r = () -> s.fetch(kw);
 
         Thread t = new Thread(r);
         t.start();

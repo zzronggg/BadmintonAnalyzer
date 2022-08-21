@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -87,12 +86,7 @@ public class ExoPlayer extends AppCompatActivity {
 
     private void setBar(){
         MaterialToolbar bar = findViewById(R.id.exo_main_bar);
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        bar.setNavigationOnClickListener(v -> finish());
     }
 
     private void prepInfo(){
