@@ -19,4 +19,7 @@
     <color name="hint_forgot_pw">#008FB1</color>
     <color name="login_btn">#FBE251</color>
     <color name="create_acc_btn">#607D8B</color>
+
+    <color name="fragment_bg">#F3EEEF</color>
+    <color name="sectionItem">#535353</color>
 </resources>

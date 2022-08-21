@@ -3,41 +3,42 @@ package com.zzrong.badminton_analyzer.act;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
+import com.zzrong.badminton_analyzer.BuildConfig;
 import com.zzrong.badminton_analyzer.R;
-import com.zzrong.badminton_analyzer.frag.PartSelectionFragment;
-import com.zzrong.badminton_analyzer.frag.VideoDataFragment;
-import com.zzrong.badminton_analyzer.func.FragmentViewModel;
-import com.zzrong.badminton_analyzer.func.VideoItemSample;
+import com.zzrong.badminton_analyzer.frag.PredictionFragment;
+import com.zzrong.badminton_analyzer.frag.StatisticFragment;
+import com.zzrong.badminton_analyzer.func.*;
 
 import java.util.ArrayList;
 
-public class EXOPlayer extends AppCompatActivity {
+public class SubExoPlayer extends AppCompatActivity {
     private String vid;
+    private String sect;
     private FragmentViewModel model;
 
     //video player
     String url;
     long currentTime;
-    private ExoPlayer player;
+    private com.google.android.exoplayer2.ExoPlayer player;
     private StyledPlayerView playerView;
     private ArrayList<Fragment> fragList;
-
-//    final String url = "http://140.119.19.35/vid/1.mp4";
+    private ArrayList<String> pred;
+    private ArrayList<String> stat;
+    private Boolean isPlot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +48,15 @@ public class EXOPlayer extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        setViewModel();
+        setBar();
+//        setViewModel();
         prepInfo();
         initFrag();
         setURL();
         initPlayer();
         setTab();
         player.setPlayWhenReady(true);
-        Log.d("State: ","Started");
+        Log.i("Status: ","Started");
     }
 
     protected void onResume() {         //restore player state after orientation
@@ -74,17 +76,30 @@ public class EXOPlayer extends AppCompatActivity {
         Log.d("State: ","Stopped");
     }
 
+    private void setBar(){
+        MaterialToolbar bar = findViewById(R.id.exo_main_bar);
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
     private void prepInfo(){
-        //1. get data from prev. activity
+        //get data from prev. activity
         Intent intent = this.getIntent();
         vid = intent.getStringExtra("id");
-        //2. pass value to the model view
-        model.setData(VideoItemSample.dataFragSample());
+        sect = intent.getStringExtra("sect");
+        pred = intent.getStringArrayListExtra("pred");
+        stat = intent.getStringArrayListExtra("stat");
+
+        //only generate statistic once
+        isPlot=false;
     }
 
     private void setURL(){
-        String base = "http://140.119.19.35/vid/";      //res location in server
-        url = base + vid;
+        String base = BuildConfig.SVR_IP;      //res location in server
+        url = base + vid + '/' + sect;
         url += ".mp4";
         Log.d("URL: ",url);
     }
@@ -92,23 +107,20 @@ public class EXOPlayer extends AppCompatActivity {
     //bind with View model
     private void setViewModel(){
 
-        model = new ViewModelProvider(this).get(FragmentViewModel.class);
+//        model = new ViewModelProvider(this).get(FragmentViewModel.class);
         //real data is from our model
-        model.getData().observe(this, videoData -> setDataFrag());
-
     }
 
     private void initFrag(){
-        VideoDataFragment f1 = VideoDataFragment.newInstance(model.getData().getValue());
-
+        PredictionFragment f1 = PredictionFragment.newInstance(pred);
         fragList = new ArrayList<>();
         fragList.add(f1);
-        fragList.add(new PartSelectionFragment());
+        fragList.add(new StatisticFragment());
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.frag_view, fragList.get(0), "f_data");
-        ft.add(R.id.frag_view, fragList.get(1), "f_sect");
+        ft.replace(R.id.frag_view, fragList.get(0), "f_pred");
+        ft.add(R.id.frag_view, fragList.get(1), "f_stat");
         ft.hide(fragList.get(0));
         ft.hide(fragList.get(1));
         ft.commit();
@@ -118,6 +130,8 @@ public class EXOPlayer extends AppCompatActivity {
         TabLayout tLayout = findViewById(R.id.tab_main);
         FragmentManager fm = getSupportFragmentManager();
 
+        if(tLayout.getTabCount()>=2) return;
+
         //1.Set listener
         tLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -126,9 +140,8 @@ public class EXOPlayer extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.show(fragList.get(tab.getPosition()));
                 ft.commit();
-                if(tab.getPosition() == 0) {
-                    model.setData(VideoItemSample.dataFragSample());
-                }
+                if(tab.getPosition() == 0) {}
+                else{setStatFrag();}
             }
 
             @Override
@@ -140,32 +153,28 @@ public class EXOPlayer extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-        //2.Add tabs
-        tLayout.addTab(tLayout.newTab().setText("影片資料"),false);
-        tLayout.addTab(tLayout.newTab().setText("段落選擇"),false);
+//        2.Add tabs
+        tLayout.addTab(tLayout.newTab().setText("球路預測"),false);
+        tLayout.addTab(tLayout.newTab().setText("統計資料"),false);
         tLayout.getTabAt(0).select();
     }
 
-    private void setDataFrag(){
+    private void setStatFrag(){
         FragmentManager fm = getSupportFragmentManager();
-        Fragment frag = fm.findFragmentByTag("f_data");
-        if(frag != null) {
-            TextView tv1 = frag.getView().findViewById(R.id.tv_frag_data_5);
-            TextView tv2 = frag.getView().findViewById(R.id.tv_frag_data_6);
-            TextView tv3 = frag.getView().findViewById(R.id.tv_frag_data_7);
-            TextView tv4 = frag.getView().findViewById(R.id.tv_frag_data_4);
-
-            tv1.setText(model.getData().getValue().get(0));
-            tv2.setText(model.getData().getValue().get(1));
-            tv3.setText(model.getData().getValue().get(2));
-            tv4.setText(getString(R.string.uploaded_date,model.getData().getValue().get(3)));
+        Fragment frag = fm.findFragmentByTag("f_stat");
+        if(frag != null && !isPlot) {
+            //to-do change
+//            ((TextView)frag.getView().findViewById(R.id.statText)).setText(stat.get(0));
         }
     }
 
+
+
     private void initPlayer(){
-        player = new ExoPlayer.Builder(this).build();
+        player = new com.google.android.exoplayer2.ExoPlayer.Builder(this).build();
         playerView = findViewById(R.id.exo_viewer);
         playerView.setControllerOnFullScreenModeChangedListener(
                 isFullScreen -> {

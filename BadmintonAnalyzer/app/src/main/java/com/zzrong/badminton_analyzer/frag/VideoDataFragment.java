@@ -52,7 +52,9 @@ public class VideoDataFragment extends Fragment {
         ((TextView)v.findViewById(R.id.tv_frag_data_6)).setText(s1);
         ((TextView)v.findViewById(R.id.tv_frag_data_3)).setText("分類　　：");
         ((TextView)v.findViewById(R.id.tv_frag_data_7)).setText(s2);
-        ((TextView)v.findViewById(R.id.tv_frag_data_4)).setText(getString(R.string.uploaded_date,s3));
+        ((TextView)v.findViewById(R.id.tv_frag_data_4)).setText("分析日期：");
+        ((TextView)v.findViewById(R.id.tv_frag_data_8)).setText(s3);
+
         return v;
     }
 

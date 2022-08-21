@@ -16,7 +16,22 @@ android {
     }
 
     buildTypes {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream()) // load local.properties
+        def api_key = properties.getProperty('api.key') // read property from local.properties
+        def svr_ip = properties.getProperty('server.ip.video')
+        def api_call = properties.getProperty('server.ip.port')
+
+        debug{
+            it.buildConfigField 'String', 'API_KEY', api_key
+            it.buildConfigField 'String', 'SVR_IP', svr_ip
+            it.buildConfigField 'String', 'API_CALL', api_call
+        }
+
         release {
+            it.buildConfigField 'String', 'API_KEY', api_key
+            it.buildConfigField 'String', 'SVR_IP', svr_ip
+            it.buildConfigField 'String', 'API_CALL', api_call
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -42,6 +57,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

@@ -7,11 +7,12 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.zzrong.badminton_analyzer.BuildConfig;
 import com.zzrong.badminton_analyzer.R;
 
 public class YouTubeActivity extends YouTubeBaseActivity {
 
-    final private String API_KEY = "AIzaSyAeiu7yY3tVB5_uadtdkTYxoT1KkCjC7ds";
+    final private String API_KEY = BuildConfig.API_KEY;
 
     private Intent intent;
     private FloatingActionButton fab;

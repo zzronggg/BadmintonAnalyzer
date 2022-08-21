@@ -97,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     protected void createRecyclerView(){
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.searchRecycler);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         adapter = new VideoItemAdapter(this, model.getItems().getValue());
         recyclerView.setAdapter(adapter);

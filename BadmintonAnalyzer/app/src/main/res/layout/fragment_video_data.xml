@@ -6,96 +6,127 @@
              tools:context=".frag.VideoDataFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" android:background="@color/fragment_bg">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/f_data_cl_1"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                android:padding="10dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_1"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_5"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintStart_toEndOf="@id/tv_frag_data_1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_frag_data_1"
-                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                    app:layout_constraintHorizontal_bias="0.0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/f_data_cl_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/f_data_cl_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.0" android:padding="10dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_2"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_6"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintStart_toEndOf="@id/tv_frag_data_2"
-                    app:layout_constraintTop_toTopOf="@id/tv_frag_data_2" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                    app:layout_constraintHorizontal_bias="0.0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/f_data_cl_3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/f_data_cl_2" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.0" android:padding="10dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_3"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintVertical_bias="0.0"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:id="@+id/tv_frag_data_7"
-                    android:textSize="20sp"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintTop_toTopOf="@id/tv_frag_data_3"
-                    app:layout_constraintStart_toEndOf="@id/tv_frag_data_3" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/tv_frag_data_4"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@+id/f_data_cl_3"
+        <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                android:layout_height="wrap_content" android:padding="10dp"/>
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHeight_percent="0.9"
+                app:cardCornerRadius="30dp" app:layout_constraintWidth_percent="0.9"
+                app:cardElevation="1dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/f_data_cl_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="10dp" app:layout_constraintVertical_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.63">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_1"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
+                            android:textStyle="bold" android:layout_marginLeft="10dp" android:layout_marginTop="5dp"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_5"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toEndOf="@id/tv_frag_data_1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_frag_data_1"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintHorizontal_bias="0.0"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/f_data_cl_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/f_data_cl_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_bias="0.0" android:padding="10dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_2"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
+                            android:textStyle="bold" android:layout_marginLeft="10dp"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_6"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toEndOf="@id/tv_frag_data_2"
+                            app:layout_constraintTop_toTopOf="@id/tv_frag_data_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintHorizontal_bias="0.0"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/f_data_cl_3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/f_data_cl_2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_bias="0.0" android:padding="10dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_3"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                            android:textStyle="bold" android:layout_marginLeft="10dp"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:id="@+id/tv_frag_data_7"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toTopOf="@id/tv_frag_data_3"
+                            app:layout_constraintStart_toEndOf="@id/tv_frag_data_3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/f_data_cl_4"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/f_data_cl_3" android:padding="10dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_frag_data_4"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                            android:textStyle="bold" android:layout_marginLeft="10dp"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/tv_frag_data_8"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_frag_data_4"
+                            app:layout_constraintTop_toTopOf="@id/tv_frag_data_4"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.zzrong.badminton_analyzer.func;
 
 import android.util.Log;
+import com.zzrong.badminton_analyzer.BuildConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -15,7 +16,7 @@ public class Search {
     private ArrayList<String> title;
     private ArrayList<String> thumbnail;
     private ArrayList<String> description;
-    final private String API_KEY="AIzaSyAeiu7yY3tVB5_uadtdkTYxoT1KkCjC7ds";
+    final private String API_KEY= BuildConfig.API_KEY;
 
     //connect youtube api and retrieve JSON file
     public void fetch(String keyword){
@@ -33,10 +34,11 @@ public class Search {
         String kw = "bwf" + keyword;
         Log.d("keywords: ",kw);
 
-        String url = null;
+        String url;
         String order = "relevance"; //date, rating, relevance, title, videoCount,viewCount
         url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults="+res_limit+
                 "&order="+order+"&q="+kw+"&key="+API_KEY;
+        Log.d("API KEY: ",API_KEY);
         Log.d("Query: ",url);
 
         try {
@@ -55,11 +57,10 @@ public class Search {
     protected void parse(String json) throws JSONException {
         //Make a object
         JSONObject ob = new JSONObject(json);
-        String vid="";
-        String tit="";
-        String thumb="";
-        String des="";
-        String token=""; //next page , under construction
+        String vid;
+        String tit;
+        String thumb;
+        String des;
         for(int i = 0; i< ob.getJSONArray("items").length(); i++){
 
             try {

@@ -102,8 +102,17 @@ public class VideoItemSample {
         return lst2;
     }
 
-    public static ArrayList<String> analFragSample(){
+    public static ArrayList<String> predFragSample(){
         //undefined
+        lst2 = new ArrayList<>();
+        lst2.add("Loser");
+        return lst2;
+    }
+
+    public static ArrayList<String> statFragSample(){
+        //undefined
+        lst2 = new ArrayList<>();
+        lst2.add("Winner");
         return lst2;
     }
 

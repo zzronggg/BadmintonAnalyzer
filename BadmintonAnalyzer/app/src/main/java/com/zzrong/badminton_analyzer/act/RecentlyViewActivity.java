@@ -46,7 +46,7 @@ public class RecentlyViewActivity extends AppCompatActivity {
     }
 
     protected void createRecyclerView(){
-        recyclerView = findViewById(R.id.resRecycler);
+        recyclerView = findViewById(R.id.rctlyRecycler);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         adapter = new ServerVideoAdapter(this, videoItems);
         recyclerView.setAdapter(adapter);

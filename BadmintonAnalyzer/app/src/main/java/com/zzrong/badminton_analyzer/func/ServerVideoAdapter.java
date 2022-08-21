@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import com.zzrong.badminton_analyzer.R;
-import com.zzrong.badminton_analyzer.act.EXOPlayer;
+import com.zzrong.badminton_analyzer.act.ExoPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ServerVideoAdapter extends RecyclerView.Adapter<ServerVideoAdapter.
             public void onClick(View v) {
 
                 Context current = v.getContext();
-                Intent intent = new Intent(current, EXOPlayer.class);
+                Intent intent = new Intent(current, ExoPlayer.class);
                 intent.putExtra("id",item.getID());
                 intent.putExtra("title",item.getTitle());
                 current.startActivity(intent);

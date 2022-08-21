@@ -1,31 +1,30 @@
 package com.zzrong.badminton_analyzer.func;
 
 import android.util.Log;
+import com.zzrong.badminton_analyzer.BuildConfig;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FlaskApiSender {
 
-    private OkHttpClient client;
-    private String id;
-    private String title;
-    private String url;
+    private static OkHttpClient client;
+    private static final String url = BuildConfig.API_CALL;
 
-    public FlaskApiSender(String vid, String title){
-        id = vid;
-        this.title = title;
-        url = "http://140.119.19.35:8887";
+
+    public FlaskApiSender(){
+
     }
 
     public void signUp(){
 
     }
 
-    public void addVid(){
+    public static void addVid(String vid, String title){
 
         String api = "/download";
         Log.d("POST",url + api);
@@ -37,7 +36,7 @@ public class FlaskApiSender {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", id);
+            jsonObject.put("id", vid);
             jsonObject.put("title", title);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -65,5 +64,14 @@ public class FlaskApiSender {
 
     public void checkStat(){
 
+    }
+
+    public static ArrayList<String> getSectPred(String vid, String section){
+        //underconstruction
+        return VideoItemSample.predFragSample();
+    }
+    public static ArrayList<String> getSectStat(String vid, String section){
+        //underconstruction
+        return VideoItemSample.statFragSample();
     }
 }

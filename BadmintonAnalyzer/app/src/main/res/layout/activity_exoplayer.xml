@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".act.EXOPlayer">
+        tools:context=".act.ExoPlayer">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
     </com.google.android.exoplayer2.ui.StyledPlayerView>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/exo_viewer" app:layout_constraintVertical_bias="0.0">
@@ -52,11 +52,12 @@
                 app:layout_constraintVertical_bias="0.0" tools:ignore="SpeakableTextPresentCheck"/>
         <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:name="com.zzrong.badminton_analyzer.frag.VideoDataFragment"
                 android:id="@+id/frag_view"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/tab_main"/>
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/tab_main"
+                android:layout_marginTop="0.5dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
