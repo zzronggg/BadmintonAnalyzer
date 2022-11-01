@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content">
+
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent" app:srcCompat="@drawable/ic_baseline_circle"
+            android:id="@+id/imageView" app:tint="@color/elegant_red"
+            app:layout_constraintStart_toStartOf="@id/v_1_start"
+            app:layout_constraintTop_toTopOf="@id/h_top"
+            app:layout_constraintEnd_toEndOf="@id/v_2_end" app:layout_constraintBottom_toBottomOf="@id/h_bot"
+            app:layout_constraintHorizontal_bias="0.07" app:layout_constraintDimensionRatio="1:1"
+    />
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent" app:srcCompat="@drawable/ic_baseline_circle"
+            android:id="@+id/imageView2" app:tint="@color/elegant_blue"
+            app:layout_constraintStart_toStartOf="@id/v_2_end"
+            app:layout_constraintTop_toTopOf="@id/h_top"
+            app:layout_constraintEnd_toEndOf="@id/v_end" app:layout_constraintBottom_toBottomOf="@id/h_bot"
+            app:layout_constraintHorizontal_bias="0.07" app:layout_constraintDimensionRatio="1:1"
+    />
+    <TextView
+            android:text="@string/down_player"  android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/v_2_end" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+    <TextView
+            android:text="@string/up_player"  android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/v_end"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:id="@+id/h_top"
+                                                android:orientation="horizontal"
+                                                app:layout_constraintGuide_percent="0.2"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:id="@+id/h_bot"
+                                                android:orientation="horizontal"
+                                                app:layout_constraintGuide_percent="0.8"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:id="@+id/v_1_start"
+                                                android:orientation="vertical" app:layout_constraintGuide_begin="20dp"
+                                                app:layout_constraintGuide_percent="0.1"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                app:layout_constraintGuide_percent="0.9" android:id="@+id/v_end"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                app:layout_constraintGuide_percent="0.5" android:id="@+id/v_2_end"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
