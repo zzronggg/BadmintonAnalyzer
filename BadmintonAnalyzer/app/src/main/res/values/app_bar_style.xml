@@ -13,6 +13,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="top_app_bar_dark_blue" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/egg_yellow</item>
+        <item name="colorPrimaryVariant">@color/egg_yellow</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="android:actionMenuTextAppearance">@style/menu_text_style</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
 
 
     <!--  Text Style   -->

@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".act.ResetSuccessActivity">
+        tools:context=".activity.ResetSuccessActivity">
 
 
     <TextView
@@ -36,16 +36,18 @@
             android:layout_height="0dp" app:srcCompat="@drawable/ic_baseline_email" android:id="@+id/image_reset_suc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_create_go_back" app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintBottom_toTopOf="@+id/tv_reset_suc_go_back" app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.57"
             android:contentDescription="@string/email_logo"/>
 
     <TextView
             android:text="@string/back_to_login"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_create_go_back"
+            android:layout_height="wrap_content" android:id="@+id/tv_reset_suc_go_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
+            android:clickable="true"
             android:textColor="@color/hint_forgot_pw"
             android:fontFamily="@font/taipei_sans_regular"
             android:textSize="20sp"

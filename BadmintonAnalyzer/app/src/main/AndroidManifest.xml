@@ -21,24 +21,29 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.BadmintonAnalyzer">
         <activity
-                android:name=".act.SubExoPlayer"
+                android:name=".activity.PlayerDataActivity"
+                android:theme="@style/top_app_bar_yellow"
+                android:exported="false"/>
+        <activity
+                android:name=".activity.SubExoPlayer"
+                android:theme="@style/top_app_bar_yellow"
                 android:exported="true"/>
         <activity
-                android:name=".act.CreateSuccessActivity"
+                android:name=".activity.CreateSuccessActivity"
                 android:exported="true"/>
         <activity
-                android:name=".act.CreateAccountActivity"
+                android:name=".activity.CreateAccountActivity"
                 android:exported="true"
                 android:windowSoftInputMode="adjustPan|adjustNothing"/>
         <activity
-                android:name=".act.ResetSuccessActivity"
+                android:name=".activity.ResetSuccessActivity"
                 android:exported="true"/>
         <activity
-                android:name=".act.ResetPWActivity"
+                android:name=".activity.ResetPWActivity"
                 android:exported="true"
                 android:windowSoftInputMode="adjustPan"/>
         <activity
-                android:name=".act.LoginActivity"
+                android:name=".activity.LoginActivity"
                 android:exported="true"
                 android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -48,20 +53,19 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".act.YouTubeActivity"
+                android:name=".activity.YouTubeActivity"
                 android:exported="true"/>
         <activity
-                android:name=".act.ExoPlayer"
-                android:configChanges="orientation|screenSize|layoutDirection"
+                android:name=".activity.ExoPlayer"
                 android:exported="true"
                 android:theme="@style/top_app_bar_yellow"/>
         <activity
-                android:name=".act.SearchActivity"
+                android:name=".activity.SearchActivity"
                 android:configChanges="keyboardHidden|orientation"
                 android:exported="true"
                 android:windowSoftInputMode="adjustPan"/>
         <activity
-                android:name=".act.RecentlyViewActivity"
+                android:name=".activity.RecentlyViewActivity"
                 android:exported="true"
                 android:theme="@style/top_app_bar_yellow"/>
     </application>

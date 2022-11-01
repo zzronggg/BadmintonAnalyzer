@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="egg_yellow">#FCEB8B</color>
+    <color name="dark_yellow">#EDAB1C</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#757575</color>
@@ -22,4 +18,23 @@
 
     <color name="fragment_bg">#F3EEEF</color>
     <color name="sectionItem">#535353</color>
+
+    <color name="pred_title">#FAB30E</color>
+    <color name="ball_type_default">#0EB384</color>
+    <color name="ball_type_attack">#E66826</color>
+    <color name="ball_type_normal">#3D63BB</color>
+
+    <color name="elegant_blue">#43B5F5</color>
+    <color name="elegant_red">#FD736E</color>
+    <color name="elegant_orange">#E76826</color>
+    <color name="foggy_gray">#8E8C8C</color>
+    <color name="dark_gray">#535353</color>
+    <color name="sugar_blue">#43B5F5</color>
+    <color name="sugar_red">#FC746D</color>
+    <color name="sugar_light_blue">#52BEF6</color>
+    <color name="sugar_light_red">#FD817B</color>
+    <color name="ground">#70A592</color>
+    <color name="mint_green">#DFF0D8</color>
+
+
 </resources>

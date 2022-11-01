@@ -49,12 +49,28 @@
         <u>點擊按鈕以分析此影片</u>
     </string>
 
+    <!-- Player Data Page   -->
+    <string name="blue_player">藍方</string>
+    <string name="red_player">紅方</string>
+    <string name="data">數據</string>
+    <string name="ball_win_rate">使用率/勝率</string>
+    <string name="strategy">慣用戰術</string>
+    <string name="move_direction">移動方向</string>
+
+
     <!-- Exo Main Page   -->
     <string name="video_data">影片資料</string>
-    <string name="section_selection">段落選擇</string>
-    <string name="integrity_analysis">整體分析</string>
+    <string name="section_selection">段落分析</string>
     <string name="uploaded_date">分析日期：%1$s</string>
 
+    <!-- Prediction Fragment   -->
+    <string name="up_player">上方選手</string>
+    <string name="down_player">下方選手</string>
+
+    <!-- Section Fragment   -->
+    <string name="game_one">第一局</string>
+    <string name="game_two">第二局</string>
+    <string name="game_three">第三局</string>
 
     <!-- Top Action Bar-->
     <string name="recently_view">近期觀看</string>
@@ -62,4 +78,19 @@
     <string name="favorite">Favorite</string>
     <string name="content_description_favorite">Favorite2</string>
 
+    <!-- Navigation Drawer   -->
+    <string name="edit_category">編輯分類</string>
+    <string name="all_vid">所有影片</string>
+    <string name="rctly_viewed">最近觀看</string>
+    <string name="my_fav">我的最愛</string>
+    <string name="customized_list">自訂列表</string>
+
+    <!-- Bookmark Alert Dialog   -->
+    <string name="add_bookmark_title">新增書籤</string>
+    <string name="add_bookmark_hint">請輸入書籤名稱</string>
+    <string name="remove_bookmark_title">移除書籤</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">取消</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

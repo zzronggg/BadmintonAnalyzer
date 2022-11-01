@@ -6,4 +6,9 @@
         <item name="android:fontFamily">@font/taipei_regular</item>
     </style>
 
+    <style name="TabText_17" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/taipei_regular</item>
+    </style>
+
 </resources>

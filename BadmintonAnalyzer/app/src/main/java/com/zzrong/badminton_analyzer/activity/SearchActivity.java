@@ -1,17 +1,19 @@
-package com.zzrong.badminton_analyzer.act;
+package com.zzrong.badminton_analyzer.activity;
 
+import com.zzrong.badminton_analyzer.adapter.VideoItemAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.zzrong.badminton_analyzer.R;
 import com.zzrong.badminton_analyzer.func.*;
+import com.zzrong.badminton_analyzer.viewModel.SearchViewModel;
 
 import java.util.ArrayList;
 
@@ -48,13 +50,23 @@ public class SearchActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+
+        ImageButton exitBtn = findViewById(R.id.btn_exit_search);
+        exitBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                finish();
+            }
+        });
     }
 
     public void setViewModel(){
+        //call back when content change
         model.getItems().observe(this, videoItems -> {
             Log.d("ModelViewState: ","detect change");
             createRecyclerView();
         });
+        //execute now
         createRecyclerView();
     }
 
@@ -82,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void fakeSearch(View view){
-        model.setItems(VideoItemSample.getSample());
+        model.setItems(SampleProvider.getSample());
     }
 
     protected void createRecyclerView(){

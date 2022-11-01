@@ -3,39 +3,102 @@
              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".frag.PartSelectionFragment">
+             tools:context=".fragment.PartSelectionFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:background="@color/fragment_bg">
 
         <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHeight_percent="0.9"
-                app:cardCornerRadius="30dp" app:layout_constraintWidth_percent="0.9"
-                app:cardElevation="1dp">
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/sect_window_start"
+                app:layout_constraintEnd_toEndOf="@id/sect_window_end"
+                app:layout_constraintBottom_toBottomOf="@id/section_recycler_bot"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="1dp"
+                tools:layout_constraintEnd_toEndOf="@id/sect_window_end"
+                app:layout_constraintTop_toTopOf="@id/tips_top">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:id="@+id/tab_bot"
+                                                            android:orientation="horizontal"
+                                                            app:layout_constraintGuide_percent="0.07"/>
+                <com.google.android.material.tabs.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tab_sect"
+                        app:tabTextAppearance="@style/TabText"
+                        app:tabSelectedTextColor="@color/ground"
+                        app:tabIndicatorColor="@color/ground"
+                        tools:ignore="SpeakableTextPresentCheck"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/tab_bot"
+                        app:layout_constraintVertical_bias="0.0">
+                    <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/sect_game_1"
+                            android:text="@string/game_one"/>
+                    <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/sect_game_2"
+                            android:text="@string/game_two"/>
+                </com.google.android.material.tabs.TabLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="match_parent"
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" android:layout_height="0dp"
-                        app:layout_constraintHeight_percent="0.85" app:layout_constraintWidth_percent="0.85">
+                        app:layout_constraintTop_toBottomOf="@id/rcycler_top">
 
                     <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/sectRecycler"
+                            android:layout_height="match_parent" android:id="@+id/sectRecycler"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent">
                     </androidx.recyclerview.widget.RecyclerView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:id="@+id/rcycler_bot"
+                                                            android:orientation="horizontal"
+                                                            app:layout_constraintGuide_percent="0.9"/>
+                <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:id="@+id/rcycler_top"
+                                                            android:orientation="horizontal"
+                                                            app:layout_constraintGuide_percent="0.12"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/sect_window_start"
+                                                    android:orientation="vertical"
+                                                    app:layout_constraintGuide_percent="0.05"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/sect_window_end"
+                                                    android:orientation="vertical"
+                                                    app:layout_constraintGuide_percent="0.95"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/section_recycler_bot"
+                                                    android:orientation="horizontal"
+                                                    app:layout_constraintGuide_percent="0.95"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/tips_top"
+                                                    android:orientation="horizontal"
+                                                    app:layout_constraintGuide_percent="0.02"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/rclyer_top"
+                                                    android:orientation="horizontal"
+                                                    app:layout_constraintGuide_percent="0.1"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
