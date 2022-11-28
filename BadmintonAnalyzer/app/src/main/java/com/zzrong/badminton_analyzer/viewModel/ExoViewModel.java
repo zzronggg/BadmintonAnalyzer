@@ -7,14 +7,16 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-public class FragmentViewModel extends ViewModel {
+public class ExoViewModel extends ViewModel {
 
     public MutableLiveData<Long> playTime;
     public MutableLiveData<ArrayList<String>> videoData;
     public MutableLiveData<ArrayList<List<Object>>> sectionList;
-    public MutableLiveData<ArrayList<String>> pred;
+
+    public MutableLiveData<ArrayList<HashMap<String, ArrayList<HashMap<String,Object>>>>> shotList;
     public MutableLiveData<ArrayList<String>> stat;
     public MutableLiveData<Boolean[]> sectRecyclerState;
 
@@ -44,32 +46,13 @@ public class FragmentViewModel extends ViewModel {
         return mainTabState;
     }
 
-    public LiveData<Integer> getSubTabState(){
-        if(subTabState == null){
-            subTabState = new MutableLiveData<>();
-            subTabState.setValue(0);
+    public LiveData<ArrayList<HashMap<String, ArrayList<HashMap<String,Object>>>>> getShotList() {
+        if (shotList == null) {
+            shotList = new MutableLiveData<>();
+            shotList.setValue(new ArrayList<>());
         }
-        return subTabState;
+        return shotList;
     }
-
-
-
-    public LiveData<ArrayList<String>> getPred() {
-        if (pred == null) {
-            pred = new MutableLiveData<>();
-            pred.setValue(new ArrayList<>());
-        }
-        return pred;
-    }
-
-//    public LiveData<ArrayList<String>> getStat() {
-//        if (stat == null) {
-//            stat = new MutableLiveData<>();
-//            stat.setValue(new ArrayList<>());
-//        }
-//        Log.i("Stat: ", Boolean.toString(stat==null));
-//        return sectionList;
-//    }
 
     public LiveData<Boolean[]> getRecyclerState() {
         if (sectRecyclerState == null) {
@@ -93,13 +76,11 @@ public class FragmentViewModel extends ViewModel {
 
     public void setData(ArrayList<String> arr) { this.videoData.setValue(arr); }
     public void setMainTabState(Integer position){ this.mainTabState.setValue(position);}
-    public void setSubTabState(Integer position){ this.subTabState.setValue(position);}
-    public void setCategory(String cat){ this.videoData.getValue().set(9, cat); }
     public void setSect(ArrayList<List<Object>> arr) {
         this.sectionList.setValue(arr);
     }
-    public void setPred(ArrayList<String> arr) {
-        this.pred.setValue(arr);
+    public void setShotList(ArrayList<HashMap<String, ArrayList<HashMap<String,Object>>>> map) {
+        this.shotList.setValue(map);
     }
     public void setStat(ArrayList<String> arr) {
         this.stat.setValue(arr);

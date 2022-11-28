@@ -8,9 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class FlaskApiSender {
+public class FlaskApiSender{
 
     private static OkHttpClient client;
     private static final String url = BuildConfig.API_CALL;
@@ -463,14 +462,173 @@ public static String getBookmark(String user){
         return null;
     }
 
+    public static String getVideoInfo(String vid){
+        //get user's bookmark content from server database
+        String api = "/get_video";
+        Log.d("POST",url + api);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        client = new OkHttpClient().newBuilder().addInterceptor(logging).build();
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", vid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("JSON",jsonObject.toString());
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Log.d("url: ",url+api);
+        Request request = new Request.Builder()
+                .url(url + api)
+                .post(body) // 使用post連線
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            String msg = response.body().string();
+            Log.d("response: ",msg);
+            return msg;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getTotalInfo(String vid){
+        //get user's bookmark content from server database
+        String api = "/get_total_info";
+        Log.d("POST",url + api);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        client = new OkHttpClient().newBuilder().addInterceptor(logging).build();
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", vid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("JSON",jsonObject.toString());
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Log.d("url: ",url+api);
+        Request request = new Request.Builder()
+                .url(url + api)
+                .post(body) // 使用post連線
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            String msg = response.body().string();
+            Log.d("response: ",msg);
+            return msg;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getSectionInfo(String vid){
+        //get user's bookmark content from server database
+        String api = "/get_section_info";
+        Log.d("POST",url + api);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        client = new OkHttpClient().newBuilder().addInterceptor(logging).build();
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", vid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("JSON",jsonObject.toString());
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Log.d("url: ",url+api);
+        Request request = new Request.Builder()
+                .url(url + api)
+                .post(body) // 使用post連線
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            String msg = response.body().string();
+            Log.d("response: ",msg);
+            return msg;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getHighlightInfo(String vid) throws InterruptedException {
+        //get user's bookmark content from server database
+        String api = "/get_highlights";
+        Log.d("POST",url + api);
+        final String[] msg = new String[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+                client = new OkHttpClient().newBuilder().addInterceptor(logging).build();
+
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("id", vid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("JSON",jsonObject.toString());
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+                RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+                Log.d("url: ",url+api);
+                Request request = new Request.Builder()
+                        .url(url + api)
+                        .post(body) // 使用post連線
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    msg[0] = response.body().string();
+                    Log.d("response: ", msg[0]);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t.start();
+        t.join();
+        return msg[0];
+    }
+
 
 
 //    public static ArrayList<String> getSectPred(String vid, String section){
 //        //underconstruction
 //        return VideoItemSample.sectFragSample();
 //    }
-    public static ArrayList<String> getSectStat(String vid, String section){
-        //underconstruction
-        return SampleProvider.statFragSample();
-    }
+//    public static ArrayList<String> getSectStat(String vid, String section){
+//        //underconstruction
+//        return SampleProvider.statFragSample();
+//    }
 }

@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.tabs.TabLayout;
 import com.zzrong.badminton_analyzer.R;
-import com.zzrong.badminton_analyzer.activity.ExoPlayer;
-import com.zzrong.badminton_analyzer.adapter.SectionItemAdapter;
-import com.zzrong.badminton_analyzer.func.SampleProvider;
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.zzrong.badminton_analyzer.viewModel.SectionViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,23 +20,19 @@ import java.util.List;
 public class PartSelectionFragment extends Fragment {
 
     String id;
-    String info;
-    SectionItemAdapter adapter;
-    int seq;
-    int start;
-    int count;
+    String data;
     TabLayout tabLayout;
-    TabLayout.OnTabSelectedListener listener;
+    List<int[]> scores;
+    List<Fragment> fragList;
+    SectionViewModel model;
 
-    public static PartSelectionFragment newInstance(String vid, String parsableStr, int seq, int start, int count){
+    public static PartSelectionFragment newInstance(String vid, String parsableStr, ArrayList<Integer> scoreInfo){
         PartSelectionFragment fragment = new PartSelectionFragment();
 
         Bundle args = new Bundle();
         args.putString("id", vid);
-        args.putString("info", parsableStr);
-        args.putInt("seq", seq);
-        args.putInt("start", start);
-        args.putInt("count", count);
+        args.putString("data", parsableStr);
+        args.putIntegerArrayList("scores", scoreInfo);
         fragment.setArguments(args);
 
         return  fragment;
@@ -47,78 +40,128 @@ public class PartSelectionFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
-            id = getArguments().getString("id");
-            info = getArguments().getString("info");
-            seq = getArguments().getInt("seq");
-            start = getArguments().getInt("start");
-            count = getArguments().getInt("count");
-        }
+        Log.d("debug: ", "PartFrag:onCreate()");
+        initialize();
+        initRecyclerFragments();
+    }
+
+    public void onResume(){
+        super.onResume();
+        Log.d("debug: ", "PartFrag:onResume()");
+        setTab();
+        restoreTab();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_part_selection, container, false);
-        tabLayout = v.findViewById(R.id.tab_sect);
-        tabLayout.getTabAt(seq - 1).select();
-
-
-        try {
-            v = setSect(v, start, count);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return v;
+        return inflater.inflate(R.layout.fragment_part_selection, container, false);
     }
 
-    public View setSect(View view, int init, int n) throws JSONException {
-        RecyclerView recyclerView = view.findViewById(R.id.sectRecycler);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-
-        ArrayList<List<Object>> totalItems = ((ExoPlayer)getContext()).getViewModel().getSect().getValue();
-
-        ArrayList<List<Object>> sectItems = new ArrayList<>();
-        JSONArray jsonArray = new JSONArray(info);
-
-        for(int i = init; i < init + n ; i ++){
-            sectItems.add(totalItems.get(i));
+    public void initialize(){
+        if(getArguments()!=null){
+            id = getArguments().getString("id");
+            data = getArguments().getString("data");
+            ArrayList<Integer> arr = getArguments().getIntegerArrayList("scores");
+            if(arr.size() == 2) {
+                int[] game1 = new int[] {0, arr.get(0) - 1};
+                int[] game2 = new int[] {arr.get(0), arr.stream().mapToInt(Integer::intValue).sum() - 1};
+                scores = Arrays.asList(game1, game2);
+            }
+            else{
+                int[] game1 = new int[] {0, arr.get(0) - 1};
+                int[] game2 = new int[] {arr.get(0), arr.get(0) + arr.get(1) - 1};
+                int[] game3 = new int[] {arr.get(0) + arr.get(1), arr.stream().mapToInt(Integer::intValue).sum() - 1};
+                scores = Arrays.asList(game1, game2, game3);
+            }
         }
 
-        Boolean[] state = ((ExoPlayer)getContext()).getViewModel().getRecyclerState().getValue();
-//        Log.d("postest: ", state.length + "");
-
-        if(state.length == 0)   {
-            adapter = new SectionItemAdapter(getContext(), sectItems, init);
-        }
-        else{
-            adapter = new SectionItemAdapter(getContext(), sectItems, init, state);
-        }
-        recyclerView.setAdapter(adapter);
-
-        return view;
+        model = new ViewModelProvider(getActivity()).get(SectionViewModel.class);
+        model.getTabState();
+        model.getSect();
+//        ((ExoPlayer) getActivity()).getViewModel().getSect();
+//        if(((ExoPlayer)getActivity()).getViewModel().getSect()!=null) {
+//            model.setSectList(((ExoPlayer) getActivity()).getViewModel().getSect().getValue());
+//        }
     }
 
-    public void setTabListener(TabLayout.OnTabSelectedListener listener){
-        this.listener = listener;
-        tabLayout.addOnTabSelectedListener(listener);
+    public void setTab(){
+        tabLayout = getView().findViewById(R.id.tab_sect);
+
+        if(scores.size()==3){
+            tabLayout.addTab(new TabLayout.Tab().setText("第三局"), false);
+        }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                switchFrag(pos);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
 
-    public void activeTabListener(boolean bool){
-        if(bool){
-            tabLayout.addOnTabSelectedListener(listener);
+    public void initRecyclerFragments(){
+
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        if(scores.size()==2) {
+            SubSectionFragment f1 = SubSectionFragment.newInstance(data, scores.get(0));
+            SubSectionFragment f2 = SubSectionFragment.newInstance(data, scores.get(1));
+            fragList = Arrays.asList(f1,f2);
+
+            ft.replace(R.id.sectionFrame, fragList.get(0), "f_game_1");
+            ft.add(R.id.sectionFrame, fragList.get(1), "f_game_2");
+            ft.hide(fragList.get(1));
         }
-        else{
-            tabLayout.removeOnTabSelectedListener(listener);
+        else if(scores.size()==3){
+            SubSectionFragment f1 = SubSectionFragment.newInstance(data,scores.get(0));
+            SubSectionFragment f2 = SubSectionFragment.newInstance(data,scores.get(1));
+            SubSectionFragment f3 = SubSectionFragment.newInstance(data,scores.get(2));
+            fragList = Arrays.asList(f1,f2,f3);
+
+            ft.replace(R.id.sectionFrame, fragList.get(0), "f_game_1");
+            ft.add(R.id.sectionFrame, fragList.get(1), "f_game_2");
+            ft.add(R.id.sectionFrame, fragList.get(2), "f_game_3");
+            ft.hide(fragList.get(1));
+            ft.hide(fragList.get(2));
         }
+
+        ft.commit();
+
     }
 
+    public void restoreTab(){
+        int n = model.getTabState().getValue();
+        switchFrag(n);
+        switchFrag(0);
+        tabLayout.getTabAt(n).select();
+    }
 
-    public void keepTab(){
-        activeTabListener(false);
-        tabLayout.getTabAt(seq-1).select();
-        activeTabListener(true);
+    public void switchFrag(int pos){
+
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        ft.hide(fragList.get(model.getTabState().getValue()));
+        ft.show(fragList.get(pos));
+        ft.commit();
+
+        model.setTabState(pos);
     }
 
 }

@@ -72,6 +72,10 @@
     <string name="game_two">第二局</string>
     <string name="game_three">第三局</string>
 
+    <!-- Strategy Fragment   -->
+    <string name="win_seq">得分球路：</string>
+    <string name="lose_seq">失分球路：</string>
+
     <!-- Top Action Bar-->
     <string name="recently_view">近期觀看</string>
     <string name="search">尋找影片</string>
@@ -91,6 +95,4 @@
     <string name="remove_bookmark_title">移除書籤</string>
     <string name="confirm">確認</string>
     <string name="cancel">取消</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

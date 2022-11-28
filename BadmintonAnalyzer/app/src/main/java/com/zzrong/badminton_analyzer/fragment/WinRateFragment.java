@@ -2,14 +2,12 @@ package com.zzrong.badminton_analyzer.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -46,16 +44,6 @@ public class WinRateFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    public static WinRateFragment newInstance(HashMap<String, Float> totalShot, HashMap<String, Float> winShot, boolean isBlue) {
-        WinRateFragment fragment = new WinRateFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("total_shot", totalShot);
-        args.putSerializable("win_shot", winShot);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +63,7 @@ public class WinRateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_win_rate, container, false);
-        return v;
+        return inflater.inflate(R.layout.fragment_win_rate, container, false);
     }
 
     public void setChart(){
@@ -88,13 +75,14 @@ public class WinRateFragment extends Fragment {
     public void setData(BarChart barChart){
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<float[]> vals;
-        ArrayList<String> labels = new ArrayList<>(Arrays.asList("","搶攻","拉吊","撲球","平球","小球","挑球","殺球","切球","長球"));
+        ArrayList<String> labels = new ArrayList<>(Arrays.asList("","撲球","平球","小球","挑球","殺球","切球","長球"));
+//        ArrayList<String> labels = new ArrayList<>(Arrays.asList("","搶攻","拉吊","撲球","平球","小球","挑球","殺球","切球","長球"));
 
         //load data
         ArrayList<Float> blueTotalShots = new ArrayList<>(Arrays.asList(
 
-            totalShots.get("搶攻"),
-            totalShots.get("拉吊"),
+//            totalShots.get("搶攻"),
+//            totalShots.get("拉吊"),
             totalShots.get("撲球"),
             totalShots.get("平球"),
             totalShots.get("小球"),
@@ -105,8 +93,6 @@ public class WinRateFragment extends Fragment {
         ));
 
         ArrayList blueWinShots = new ArrayList<>(Arrays.asList(
-            winShots.get("搶攻"),
-            winShots.get("拉吊"),
             winShots.get("撲球"),
             winShots.get("平球"),
             winShots.get("小球"),
@@ -142,11 +128,12 @@ public class WinRateFragment extends Fragment {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
-        xAxis.setLabelCount(9);
+        xAxis.setLabelCount(7);
+//        xAxis.setLabelCount(9);
 
         YAxis yLeftAxis = barChart.getAxisLeft();
         yLeftAxis.setAxisMinimum(0);
-        yLeftAxis.setAxisMaximum(Collections.max(blueTotalShots) + 20); // 設為y中最大值 + 10
+        yLeftAxis.setAxisMaximum(Collections.max(blueTotalShots) + 70); // 設為y中最大值 + 10
         yLeftAxis.setDrawAxisLine(false);
         yLeftAxis.setDrawLabels(false);
         yLeftAxis.setDrawGridLines(false);

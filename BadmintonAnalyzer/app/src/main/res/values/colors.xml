@@ -24,9 +24,11 @@
     <color name="ball_type_attack">#E66826</color>
     <color name="ball_type_normal">#3D63BB</color>
 
+    <color name="dark_blue">#416181</color>
     <color name="elegant_blue">#43B5F5</color>
     <color name="elegant_red">#FD736E</color>
     <color name="elegant_orange">#E76826</color>
+    <color name="light_gray">#C3C5BE</color>
     <color name="foggy_gray">#8E8C8C</color>
     <color name="dark_gray">#535353</color>
     <color name="sugar_blue">#43B5F5</color>

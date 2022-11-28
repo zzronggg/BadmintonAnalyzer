@@ -3,7 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".fragment.PartSelectionFragment">
+             tools:context=".fragment.MovementFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:background="@color/fragment_bg">
@@ -19,7 +19,7 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="1dp"
-                    tools:layout_constraintEnd_toEndOf="@id/sect_window_end"
+                    tools:layout_constraintEnd_toEndOf="@id/move_window_end"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
@@ -31,30 +31,30 @@
                     <com.google.android.material.tabs.TabLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tab_sect"
+                            android:id="@+id/tab_move"
                             app:tabTextAppearance="@style/TabText"
-                            app:tabSelectedTextColor="@color/dark_yellow"
-                            app:tabIndicatorColor="@color/dark_yellow"
+                            app:tabSelectedTextColor="@color/elegant_blue"
+                            app:tabIndicatorColor="@color/elegant_blue"
                             tools:ignore="SpeakableTextPresentCheck"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0">
                         <com.google.android.material.tabs.TabItem
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/sect_game_1"
-                                android:text="@string/up_player"/>
+                                android:layout_height="wrap_content" android:id="@+id/move_p1"
+                                android:text="@string/blue_player"/>
                         <com.google.android.material.tabs.TabItem
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/sect_game_2"
-                                android:text="@string/down_player"/>
+                                android:layout_height="wrap_content" android:id="@+id/move_p2"
+                                android:text="@string/red_player"/>
                     </com.google.android.material.tabs.TabLayout>
                     <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            app:layout_constraintTop_toBottomOf="@id/tab_sect"
+                            app:layout_constraintTop_toBottomOf="@id/tab_move"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/frame_ground"
+                            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/movement_fragviewer"
                             app:layout_constraintDimensionRatio="1:1" app:layout_constraintWidth_percent="0.95">
 
                     </FrameLayout>

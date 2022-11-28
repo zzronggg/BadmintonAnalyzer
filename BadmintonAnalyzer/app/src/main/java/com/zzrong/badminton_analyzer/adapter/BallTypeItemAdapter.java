@@ -19,9 +19,9 @@ public class BallTypeItemAdapter extends RecyclerView.Adapter<BallTypeItemAdapte
 //    private
     private Context context;
 
-    public BallTypeItemAdapter(Context context, ArrayList<String> lst){
+    public BallTypeItemAdapter(Context context, ArrayList<String> lst, boolean serve){
         this.context = context;
-        if(!(lst.get(0)).equals("2")){  //test
+        if(!serve){  //test
             lst.add(0,"");
         }
         itemList = lst;
@@ -43,38 +43,9 @@ public class BallTypeItemAdapter extends RecyclerView.Adapter<BallTypeItemAdapte
         else {
             holder.textId.setTextColor(ContextCompat.getColor(this.context, R.color.black));
         }
-        switch(item){
-            case "0":{
-                item = "發\n球" ; //deprecated
-                break;
-            }
-            case "1":{
-                item = "平\n球" ;
-                break;
-            }
-            case "2":{
-                item = "小\n球" ;
-                break;
-            }
-            case "3":{
-                item = "挑\n球" ;
-                break;
-            }
-            case "4":{
-                item = "切\n球" ;
-                break;
-            }
-            case "5":{
-                item = "殺\n球" ;
-                break;
-            }
-            case "10":{ //deprecated
-                item = "得\n分";
-                holder.textId.setTextColor(ContextCompat.getColor(this.context, R.color.elegant_orange));
-                break;
-            }
 
-        }
+        if(!item.isEmpty()){
+            item = item.charAt(0) + "\n" + item.charAt(1);}
         holder.textId.setText(item);
     }
 

@@ -9,26 +9,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zzrong.badminton_analyzer.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class StatisticFragment extends Fragment {
 
-    HorizontalBarChart upChart;
-    HorizontalBarChart downChart;
+    HorizontalBarChart chartTop;
+    HorizontalBarChart chartBot;
+
+
+    public static StatisticFragment newInstance(HashMap<String, Integer> blue, HashMap<String, Integer> red){
+        StatisticFragment frag = new StatisticFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable("blue",blue);
+        args.putSerializable("red",red);
+        frag.setArguments(args);
+
+        return frag;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,32 +47,38 @@ public class StatisticFragment extends Fragment {
     }
 
     public View setChart(View view){
-        upChart = view.findViewById(R.id.barChart_up);
-        upChart.setScaleEnabled(false);
-        setData(upChart,0);
+        chartTop = view.findViewById(R.id.barChart_up);
+        chartTop.setScaleEnabled(false);
+        setData(chartTop,true);
 
-        downChart = view.findViewById(R.id.barChart_down);
-        downChart.setScaleEnabled(false);
-        setData(downChart,1);
+        chartBot = view.findViewById(R.id.barChart_down);
+        chartBot.setScaleEnabled(false);
+        setData(chartBot,false);
         return view;
     }
 
-    public void setData(BarChart barChart,int player){
+    public void setData(BarChart barChart,boolean isTopPlayer){
         ArrayList<BarEntry> entries = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<>(Arrays.asList("","高遠球","切球","殺球","平球","撲球","挑球","短球"));
+        ArrayList<String> labels = new ArrayList<>(Arrays.asList("","撲球","平球","小球","挑球","殺球","切球","長球"));
+        HashMap<String, Integer> map;
+        if(isTopPlayer){
+            map = (HashMap<String, Integer>) getArguments().getSerializable("blue");
+        }
+        else{
+            map = (HashMap<String, Integer>) getArguments().getSerializable("red");
+        }
 
-        //fake data
-        entries.add(new BarEntry(1,3));
-        entries.add(new BarEntry(2,7));
-        entries.add(new BarEntry(3,5));
-        entries.add(new BarEntry(4,8));
-        entries.add(new BarEntry(5,2));
-        entries.add(new BarEntry(6,10));
-        entries.add(new BarEntry(7,6));
+        entries.add(new BarEntry(1, map.get("撲球")));
+        entries.add(new BarEntry(2,map.get("平球")));
+        entries.add(new BarEntry(3,map.get("小球")));
+        entries.add(new BarEntry(4,map.get("挑球")));
+        entries.add(new BarEntry(5,map.get("殺球")));
+        entries.add(new BarEntry(6,map.get("切球")));
+        entries.add(new BarEntry(7,map.get("長球")));
 
         BarDataSet barDataSet = new BarDataSet(entries, "");
 
-        if(player == 0) barDataSet.setColors(ContextCompat.getColor(getContext(), R.color.elegant_blue));
+        if(isTopPlayer) barDataSet.setColors(ContextCompat.getColor(getContext(), R.color.elegant_blue));
         else   barDataSet.setColors(ContextCompat.getColor(getContext(), R.color.elegant_red));
 
         barDataSet.setValueTextColor(Color.BLACK);

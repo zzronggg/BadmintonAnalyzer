@@ -1,12 +1,10 @@
 package com.zzrong.badminton_analyzer.fragment;
 
+import java.util.*;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import androidx.core.content.ContextCompat;
@@ -14,13 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.zzrong.badminton_analyzer.R;
 import com.zzrong.badminton_analyzer.activity.ExoPlayer;
 import com.zzrong.badminton_analyzer.activity.PlayerDataActivity;
-import com.zzrong.badminton_analyzer.activity.RecentlyViewActivity;
-import com.zzrong.badminton_analyzer.func.FlaskApiSender;
-import com.zzrong.badminton_analyzer.room.AppDatabase;
 
-import java.util.*;
-import java.util.concurrent.Semaphore;
-import java.util.stream.Collectors;
+
 
 public class VideoDataFragment extends Fragment {
 
@@ -33,13 +26,13 @@ public class VideoDataFragment extends Fragment {
     String p2_2;
     String p1_3;
     String p2_3;
-    String cat;
+//    String cat;
     String date;
 
     //Edit Category
     HashMap<String, String> mapId;
     HashMap<String, Integer> mapPos;
-    String oldCat;  //record old state
+//    String oldCat;  //record old state
 
     public VideoDataFragment(){
 
@@ -81,16 +74,16 @@ public class VideoDataFragment extends Fragment {
             p2_2 = getArguments().getString("p2_2");
             p1_3 = getArguments().getString("p1_3");
             p2_3 = getArguments().getString("p2_3");
-            cat = getArguments().getString("category");
+//            cat = getArguments().getString("category");
             date = getArguments().getString("date");
             mapId = (HashMap<String, String>) getArguments().getSerializable("bookmarkId");
             mapPos = (HashMap<String, Integer>) getArguments().getSerializable("bookmarkPos");
-            try {
-                userName = ((ExoPlayer)getContext()).getUserName();
-            }
-            catch (NullPointerException e){
-                Log.e("NullPointerException： ", "Switch to Landscape mode");
-            }
+//            try {
+//                userName = ((ExoPlayer)getContext()).getUserName();
+//            }
+//            catch (NullPointerException e){
+//                Log.e("NullPointerException： ", "Switch to Landscape mode");
+//            }
 
         }
     }
@@ -124,7 +117,7 @@ public class VideoDataFragment extends Fragment {
         Button btnR3 = v.findViewById(R.id.btn_right_circle_3);
         btnR3.setText(p2_3);
 
-        oldCat = cat;
+//        oldCat = cat;
 
         ((TextView)v.findViewById(R.id.tv_frag_data_date)).setText("分析日期：");
         ((TextView)v.findViewById(R.id.tv_frag_data_date_content)).setText(date);
@@ -213,11 +206,12 @@ public class VideoDataFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PlayerDataActivity.class);
                 if(v.getId() == R.id.btn_frag_data_player1){
-
+                    intent.putExtra("is_blue", true);
                 }
                 else{
-
+                    intent.putExtra("is_blue", false);
                 }
+                intent.putExtra("vid",((ExoPlayer)getContext()).getVid());
                 getContext().startActivity(intent);
             }
         };
@@ -226,14 +220,14 @@ public class VideoDataFragment extends Fragment {
         btn2.setOnClickListener(listener);
     }
 
-    void hide(View view){
-        view.setAlpha(0);
-        view.setEnabled(false);
-    }
-
-    void show(View view){
-        view.setAlpha(1);
-        view.setEnabled(true);
-    }
+//    void hide(View view){
+//        view.setAlpha(0);
+//        view.setEnabled(false);
+//    }
+//
+//    void show(View view){
+//        view.setAlpha(1);
+//        view.setEnabled(true);
+//    }
 
 }

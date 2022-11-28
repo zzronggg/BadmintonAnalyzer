@@ -2,7 +2,6 @@ package com.zzrong.badminton_analyzer.activity;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.view.View;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -27,7 +26,7 @@ import com.zzrong.badminton_analyzer.fragment.PartSelectionFragment;
 import com.zzrong.badminton_analyzer.fragment.VideoDataFragment;
 import com.zzrong.badminton_analyzer.func.*;
 import com.zzrong.badminton_analyzer.room.*;
-import com.zzrong.badminton_analyzer.viewModel.FragmentViewModel;
+import com.zzrong.badminton_analyzer.viewModel.ExoViewModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +35,9 @@ import java.util.*;
 
 public class ExoPlayer extends AppCompatActivity {
     private String vid;
-    private FragmentViewModel model;
+    private ExoViewModel model;
     private TabLayout tLayout;
+    private boolean firstCreated = true;
 
     //database
     private AppDatabase database;
@@ -56,9 +56,7 @@ public class ExoPlayer extends AppCompatActivity {
 
     //data
     private ArrayList<Integer> scoreInfo;
-    private int currentSubTab;
-    private TabLayout.OnTabSelectedListener listener;
-    boolean subTabCreated;
+    private String parsableStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class ExoPlayer extends AppCompatActivity {
     }
 
     protected void onStart() {
-        Log.d("frag test: ", "onStart()");
+        Log.d("debug: ", "ExoPlayer:onStart()");
         super.onStart();
         initDatabase();
         setBar();
@@ -76,6 +74,14 @@ public class ExoPlayer extends AppCompatActivity {
             prepInfo();
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(!firstCreated){
+            return;
+        }
+        else{
+            firstCreated = false;
         }
         initFrag();
         initPlayer();
@@ -85,50 +91,56 @@ public class ExoPlayer extends AppCompatActivity {
     }
 
     protected void onResume() { //restore player state after orientation
-        Log.d("frag test: ", "onResume()");
+        Log.d("debug: ", "ExoPlayer:onResume()");
         super.onResume();
 
-//        if (!subTabCreated){
-            setSectTab();
-//        }
-
         //restore main tab state
-        tLayout.getTabAt(0).select();
-        tLayout.getTabAt(model.getMainTabState().getValue()).select();
+        if(model.getMainTabState().getValue() == 1 && tLayout.getTabAt(1) != null){
+            model.setMainTabState(0);
+            tLayout.getTabAt(0).select();
+            tLayout.getTabAt(1).select();
+        }
 
-        //restore sub tab state
-//        if(model.getMainTabState().getValue() == 1 && fragList != null) {
-//            switchSubFrag(1, model.getSubTabState().getValue());
-//        }
+
     }
 
     private void resumePlayer(){
         try {
             if(model.getPlayTime()!=null) {
                 currentTime = model.getPlayTime().getValue();
-                Log.d("Current: ", currentTime + "");
+//                Log.d("Current: ", currentTime + "");
                 player.seekTo(currentTime);
             }
         }
         catch (Exception e){
-            Log.e("NullPointerException: ", "first time created");
+//            Log.e("NullPointerException: ", "first time created");
         }
         player.setPlayWhenReady(true);
     }
 
     protected void onPause() {
+        Log.d("debug: ", "ExoPlayer:onPause()");
         super.onPause();
         releasePlayer();
-        model.setMainTabState(tLayout.getSelectedTabPosition());
-        if(tLayout.getSelectedTabPosition() == 1){
-            model.setSubTabState(currentSubTab);
+        if(tLayout.getSelectedTabPosition() >= 0) {
+            model.setMainTabState(tLayout.getSelectedTabPosition());
         }
-        Log.d("State: ","Paused");
+//        Log.d("main_position_get: ", tLayout.getSelectedTabPosition() + "");
+//        Log.d("State: ","Paused");
     }
 
     protected void onStop() {
         super.onStop();
-        Log.d("State: ","Stopped");
+        Log.d("debug: ", "ExoPlayer:onStop()");
+    }
+
+    public void onBackPressed() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void initDatabase(){
@@ -171,7 +183,7 @@ public class ExoPlayer extends AppCompatActivity {
         bar.setNavigationOnClickListener(v -> finish());
     }
 
-    private void prepInfo() throws JSONException {
+    private void prepInfo() throws JSONException, InterruptedException {
         //1. get data from prev. activity
         Intent intent = this.getIntent();
         vid = intent.getStringExtra("id");
@@ -182,7 +194,7 @@ public class ExoPlayer extends AppCompatActivity {
         model.setSect(parseSectionData());
         model.getRecyclerState();
     }
-    private ArrayList<String> parseVideoData() throws JSONException {
+    private ArrayList<String> parseVideoData() throws JSONException, InterruptedException {
 
         /**
          *  From Database ->  0:Title 1:Date
@@ -192,14 +204,36 @@ public class ExoPlayer extends AppCompatActivity {
 
         scoreInfo = new ArrayList<>();
         ArrayList<String> lst = new ArrayList<>();
-        String response = SampleProvider.totalInfoSample();  //replaced by GET TOTAL INFO API
-        JSONObject json = new JSONObject(response);
+//        String response = SampleProvider.totalInfoSample();  //replaced by GET TOTAL INFO API
+        final String[] response = new String[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+              response[0] = FlaskApiSender.getSectionInfo(vid);
+            }
+        });
 
-        JSONArray games = json.getJSONArray("games");
+        t.start();
+        t.join();
 
-        //尚未寫取得標題與分析日期的API
-        lst.add("YONEX All England 2022");
-        lst.add("2022/03/19");
+        JSONObject json = new JSONObject(response[0]);
+        JSONArray games = json.getJSONObject("total info").getJSONArray("games");
+
+        //FakeData
+
+        t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                response[0] = FlaskApiSender.getVideoInfo(vid);
+            }
+        });
+
+        t.start();
+        t.join();
+
+        json = new JSONObject(response[0]);
+        lst.add(json.getString("title"));
+        lst.add(json.getString("time").replace("-","/"));
 
         for(int i = 0; i < games.length(); i++){
             scoreInfo.add( new Integer(games.getJSONObject(i).getInt("score count")) );
@@ -216,12 +250,37 @@ public class ExoPlayer extends AppCompatActivity {
 
     }
 
-    private ArrayList<List<Object>> parseSectionData() throws JSONException {
+    private ArrayList<List<Object>> parseSectionData() throws JSONException, InterruptedException {
         ArrayList<List<Object>> lst = new ArrayList<>();
-        String response = SampleProvider.sectionInfoSample();  //replaced by GET Section INFO API
-        JSONArray jsonArray = new JSONArray(response);
-        int totalScore = scoreInfo.stream().mapToInt(Integer::intValue).sum();
+//        String response = SampleProvider.sectionInfoSample();  //replaced by GET Section INFO API
+        String[] response = new String[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                response[0] = FlaskApiSender.getSectionInfo(vid);
+            }
+        });
 
+        t.start();
+        t.join();
+
+        JSONObject jsonObj = new JSONObject(response[0]);
+        jsonObj = jsonObj.getJSONObject("respective scores");
+        JSONArray jsonArray;
+        if(scoreInfo.size() == 2) {
+            JSONArray jsonArray1 = jsonObj.getJSONArray("g1");
+            JSONArray jsonArray2 = jsonObj.getJSONArray("g2");
+            jsonArray = ExoPlayer.mergeMultiJsonArray(jsonArray1, jsonArray2);
+        }
+        else{
+            JSONArray jsonArray1 = jsonObj.getJSONArray("g1");
+            JSONArray jsonArray2 = jsonObj.getJSONArray("g2");
+            JSONArray jsonArray3 = jsonObj.getJSONArray("g3");
+            jsonArray = ExoPlayer.mergeMultiJsonArray(jsonArray1, jsonArray2, jsonArray3);
+        }
+
+        parsableStr = jsonArray.toString();
+        int totalScore = scoreInfo.stream().mapToInt(Integer::intValue).sum();
         for (int i = 0; i < totalScore; i++){
             boolean winner = jsonArray.getJSONObject(i).getBoolean("winner");
             int top = jsonArray.getJSONObject(i).getJSONArray("top bot score").getInt(0);
@@ -242,43 +301,30 @@ public class ExoPlayer extends AppCompatActivity {
     //bind with View model
     private void setViewModel(){
 
-        model = new ViewModelProvider(this).get(FragmentViewModel.class);
+        model = new ViewModelProvider(this).get(ExoViewModel.class);
         //real data is from server
         model.getData();
         model.getSect();
         model.getMainTabState();
-        model.getSubTabState();
         model.getPlayTime();
     }
 
     private void initFrag(){
 
-        String parsableStr = SampleProvider.sectionInfoSample();
+//        String parsableStr = SampleProvider.sectionInfoSample();
 
         VideoDataFragment dataFrag = VideoDataFragment.newInstance(vid, model.getData().getValue(),bookmarkId, bookmarkPos);
-        PartSelectionFragment sectFrag1 = PartSelectionFragment.newInstance(vid, parsableStr, 1,0, scoreInfo.get(0));
-        PartSelectionFragment sectFrag2 = PartSelectionFragment.newInstance(vid, parsableStr, 2, scoreInfo.get(0), scoreInfo.get(1));
+        PartSelectionFragment sectFrag = PartSelectionFragment.newInstance(vid, parsableStr, scoreInfo);
 
         fragList = new ArrayList<>();
         fragList.add(dataFrag);
-        fragList.add(sectFrag1);
-        fragList.add(sectFrag2);
+        fragList.add(sectFrag);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frag_view, fragList.get(0), "f_data");
-        ft.add(R.id.frag_view, fragList.get(1), "f_sect_1");
-        ft.add(R.id.frag_view, fragList.get(2), "f_sect_2");
+        ft.add(R.id.frag_view, fragList.get(1), "f_sect");
         ft.hide(fragList.get(1));
-        ft.hide(fragList.get(2));
-
-        if(scoreInfo.size() == 3) {
-            PartSelectionFragment sectFrag3 = PartSelectionFragment.newInstance(vid, parsableStr, 3,
-                                            scoreInfo.get(0) + scoreInfo.get(1), scoreInfo.get(2));
-            fragList.add(sectFrag3);
-            ft.add(R.id.frag_view, fragList.get(3), "f_sect_3");
-            ft.hide(fragList.get(3));
-        }
 
         ft.commit();
 
@@ -288,22 +334,17 @@ public class ExoPlayer extends AppCompatActivity {
         tLayout = findViewById(R.id.tab_main);
         FragmentManager fm = getSupportFragmentManager();
 
-        //1.Set listener
+        if(!firstCreated){firstCreated = true;}
+
         tLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switchMainFrag();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ft.show(fragList.get(tab.getPosition()));
-//                ft.commit();
+                switchMainFrag(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ft.hide(fragList.get(tab.getPosition()));
-//                ft.commit();
             }
 
             @Override
@@ -314,100 +355,17 @@ public class ExoPlayer extends AppCompatActivity {
         });
     }
 
-    private void switchMainFrag(){
-
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        if(model.getMainTabState().getValue() == 0){
-            ft.hide(fragList.get(0));
-            ft.show(fragList.get(1));
-            model.setMainTabState(1);
-            currentSubTab = 1;
-        }
-        else{
-            ft.hide(fragList.get(1));
-            ft.hide(fragList.get(2));
-            if(scoreInfo.size() == 3) {
-                ft.hide(fragList.get(3));
-            }
-            ft.show(fragList.get(0));
-            model.setMainTabState(0);
-        }
-
-        ft.commit();
-    }
-
-    private void setSectTab(){
-
-        List<PartSelectionFragment>sectFrags;
-        if(scoreInfo.size() == 3){
-            sectFrags = Arrays.asList((PartSelectionFragment)fragList.get(1),
-                                     (PartSelectionFragment)fragList.get(2),
-                                     (PartSelectionFragment)fragList.get(3));
-        }
-        else{
-            sectFrags = Arrays.asList((PartSelectionFragment)fragList.get(1),
-                                      (PartSelectionFragment)fragList.get(2));
-        }
-
-        for(Fragment fragSect: sectFrags){
-
-            if(fragSect!=null) {
-                View view = fragSect.getView();
-                TabLayout tabLayout = view.findViewById(R.id.tab_sect);
-
-                if(scoreInfo.size() == 3){
-                    tabLayout.addTab(new TabLayout.Tab().setText("第三局"));
-                }
-
-
-                listener = new TabLayout.OnTabSelectedListener() {
-
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        int pos = tab.getPosition();
-                        switchSubFrag(currentSubTab, pos);
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                };
-
-                ((PartSelectionFragment)fragSect).setTabListener(listener);
-                currentSubTab = 0;
-
-        }
-
-        subTabCreated = true;
-
-//            tabLayout.getTabAt(1).select();
-//            tabLayout.getTabAt(0).select();
-        }
-    }
-
-    private void switchSubFrag(int from, int to){
-
-        Fragment hiddenFrag = fragList.get(from + 1);
-        Fragment poppedFrag = fragList.get(to + 1);
+    private void switchMainFrag(int pos) {
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.hide(hiddenFrag);
-        ft.show(poppedFrag);
+        Log.d("fragList", fragList.size() + "");
+        ft.hide(fragList.get(model.getMainTabState().getValue()));
+        ft.show(fragList.get(pos));
+        Log.d("main_position_set: ", pos + "");
         ft.commit();
-
-        currentSubTab = to;
-        ((PartSelectionFragment)hiddenFrag).keepTab();
+        model.setMainTabState(pos);
     }
-
 
     private void initPlayer(){
         setURL();
@@ -419,9 +377,8 @@ public class ExoPlayer extends AppCompatActivity {
                     int orientation = getResources().getConfiguration().orientation;
                     if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
                     }
-                    else{
+                    else if(orientation == Configuration.ORIENTATION_LANDSCAPE){
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     }
 
@@ -448,11 +405,18 @@ public class ExoPlayer extends AppCompatActivity {
         return vid;
     }
 
-    public FragmentViewModel getViewModel(){
+    public ExoViewModel getViewModel(){
         return model;
     }
 
     public String getUserName(){
         return userDao.getUser().getName();
+    }
+    public static JSONArray mergeMultiJsonArray(JSONArray... arrays) {
+        JSONArray outArray = new JSONArray();
+        for (JSONArray array : arrays)
+            for (int i = 0; i < array.length(); i++)
+                outArray.put(array.optJSONObject(i));
+        return outArray;
     }
 }

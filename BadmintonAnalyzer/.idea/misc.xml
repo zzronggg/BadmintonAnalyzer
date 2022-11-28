@@ -99,6 +99,7 @@
         <entry key="app/src/main/res/drawable/ic_up_arrow_2.xml" value="0.183" />
         <entry key="app/src/main/res/drawable/password_toggle_selector.xml" value="0.26" />
         <entry key="app/src/main/res/drawable/straight_line_horizontal.xml" value="0.26" />
+        <entry key="app/src/main/res/font/taipei_regular.xml" value="0.4824074074074074" />
         <entry key="app/src/main/res/layout-land/activity_create_account.xml" value="0.2" />
         <entry key="app/src/main/res/layout-land/activity_exoplayer.xml" value="0.40572916666666664" />
         <entry key="app/src/main/res/layout-land/activity_login.xml" value="0.26759185791015627" />
@@ -131,7 +132,9 @@
         <entry key="app/src/main/res/layout/fragment_prediction.xml" value="0.4794238683127572" />
         <entry key="app/src/main/res/layout/fragment_sequence.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_statistic.xml" value="0.35404968261718744" />
-        <entry key="app/src/main/res/layout/fragment_strategy.xml" value="0.32916666666666666" />
+        <entry key="app/src/main/res/layout/fragment_strategy.xml" value="0.41164652506510413" />
+        <entry key="app/src/main/res/layout/fragment_sub_movement.xml" value="0.39010416666666664" />
+        <entry key="app/src/main/res/layout/fragment_sub_section.xml" value="0.5109375" />
         <entry key="app/src/main/res/layout/fragment_video_data.xml" value="0.44538407329105" />
         <entry key="app/src/main/res/layout/fragment_win_rate.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/header_drawer.xml" value="0.502051282051282" />
@@ -144,7 +147,8 @@
         <entry key="app/src/main/res/layout/item_section_red.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/itme_section.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/layout/navigation_header.xml" value="0.3234375" />
-        <entry key="app/src/main/res/layout/panel_movement.xml" value="0.3482846762592395" />
+        <entry key="app/src/main/res/layout/panel_movement.xml" value="0.6970963851265286" />
+        <entry key="app/src/main/res/layout/panel_movement2.xml" value="0.3489583333333333" />
         <entry key="app/src/main/res/layout/section_item.xml" value="0.3943003336588541" />
         <entry key="app/src/main/res/layout/toast_msg.xml" value="0.3234375" />
         <entry key="app/src/main/res/menu/context_menu.xml" value="0.26145833333333335" />

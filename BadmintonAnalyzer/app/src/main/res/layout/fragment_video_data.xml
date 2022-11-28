@@ -86,7 +86,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_3"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_center"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold"/>
                 <Button
                         android:layout_width="0dp"
                         android:layout_height="0dp" android:id="@+id/btn_left_circle_2"
@@ -96,7 +96,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_3"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_center"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold"/>
                 <Button
                         android:layout_width="0dp"
                         android:layout_height="0dp" android:id="@+id/btn_left_circle_3"
@@ -107,7 +107,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_3"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_center"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold"/>
                 <Button
                         android:layout_width="0dp"
                         android:layout_height="0dp" android:id="@+id/btn_right_circle_1"
@@ -118,7 +118,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_center"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_4"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold"/>
                 <Button
                         android:layout_width="0dp"
                         android:layout_height="0dp" android:id="@+id/btn_right_circle_2"
@@ -129,7 +129,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_center"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_4"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold">
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold">
 
                 </Button>
                 <Button
@@ -142,7 +142,7 @@
                         app:layout_constraintLeft_toLeftOf="@id/guideline_vdata_v_center"
                         app:layout_constraintRight_toRightOf="@id/guideline_vdata_v_4"
                         app:layout_constraintDimensionRatio="1:1" android:clickable="false"
-                        android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                        android:textColor="@color/white" android:textSize="14sp" android:textStyle="bold"/>
 
                 <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
                                                             android:layout_height="wrap_content"

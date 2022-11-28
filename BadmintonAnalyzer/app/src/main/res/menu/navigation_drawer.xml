@@ -20,7 +20,7 @@
 
 
     <item
-        android:title="自訂分類"
+        android:title="分類"
         android:id = "@+id/menuitem_subtitle"
         >
         <menu>

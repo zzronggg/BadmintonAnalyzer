@@ -23,10 +23,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.zzrong.badminton_analyzer.R;
 import com.zzrong.badminton_analyzer.chart.BarChartCustomRenderer;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MoveRateFragment extends Fragment {
 
@@ -78,8 +78,7 @@ public class MoveRateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_win_rate, container, false);
-        return v;
+        return inflater.inflate(R.layout.fragment_win_rate, container, false);
     }
 
     public void setChart(){
@@ -88,8 +87,8 @@ public class MoveRateFragment extends Fragment {
         chart.setScaleEnabled(false);
         setData(chart);
         chart.setVisibleXRange(8,8);
-        float l = chart.getLowestVisibleX();
-        float h = chart.getHighestVisibleX();
+//        float l = chart.getLowestVisibleX();
+//        float h = chart.getHighestVisibleX();
         chart.animateY(2000);
 
         ArrayList<Bitmap> imgLst = new ArrayList<>();
@@ -121,6 +120,8 @@ public class MoveRateFragment extends Fragment {
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<Float> vals = new ArrayList<>();
 
+        int total = moveType.values().stream().mapToInt(Float::intValue).sum();
+
         vals.add(moveType.get("DLBR"));
         vals.add(moveType.get("DSBR"));
         vals.add(moveType.get("DLBL"));
@@ -139,8 +140,10 @@ public class MoveRateFragment extends Fragment {
         vals.add(moveType.get("LSF"));
         vals.add(moveType.get("NM"));
 
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
         for(int i = 0; i < vals.size(); i ++){
-            entries.add(new BarEntry(i+1, vals.get(i)));
+            entries.add(new BarEntry(i+1, Float.valueOf(decimalFormat.format(vals.get(i)/total * 100))));
         }
 
         BarDataSet barDataSet = new BarDataSet(entries, "");
@@ -165,7 +168,7 @@ public class MoveRateFragment extends Fragment {
 
         YAxis yLeftAxis = barChart.getAxisLeft();
         yLeftAxis.setAxisMinimum(0);
-        yLeftAxis.setAxisMaximum(Collections.max(vals)+10); // 設為y中最大值+10
+        yLeftAxis.setAxisMaximum((Collections.max(vals)/total*100) + 10); // 設為y中最大值+10
         yLeftAxis.setDrawAxisLine(false);
         yLeftAxis.setDrawLabels(false);
         yLeftAxis.setDrawGridLines(false);
@@ -192,9 +195,7 @@ public class MoveRateFragment extends Fragment {
 
     public static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(context, drawableId);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            drawable = (DrawableCompat.wrap(drawable)).mutate();
-        }
+        drawable = (DrawableCompat.wrap(drawable)).mutate();
 
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
                 drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);

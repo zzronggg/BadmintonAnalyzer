@@ -1,9 +1,7 @@
 package com.zzrong.badminton_analyzer.activity;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.FrameLayout;
-import com.zzrong.badminton_analyzer.adapter.BallTypeItemAdapter;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -27,11 +24,14 @@ import com.zzrong.badminton_analyzer.fragment.MovementFragment;
 import com.zzrong.badminton_analyzer.fragment.SequenceFragment;
 import com.zzrong.badminton_analyzer.fragment.StatisticFragment;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SubExoPlayer extends AppCompatActivity {
     private String vid;
-    private String sect;
+    private int game;
+    private int score;
 
     //video player
     String url;
@@ -39,12 +39,16 @@ public class SubExoPlayer extends AppCompatActivity {
     private com.google.android.exoplayer2.ExoPlayer player;
     private StyledPlayerView playerView;
     private ArrayList<Fragment> fragList;
-    private BallTypeItemAdapter adapter;
-    private ArrayList<String> pred_up;
-    private ArrayList<String> pred_down;
-    private ArrayList<String> stat;
-    private Boolean isPlot_move;
-    private Boolean isPlot_stat;
+    private ArrayList<HashMap<String, Object>> eachFrameInfo;
+    private ArrayList<String> pred_blue;
+    private ArrayList<String> pred_red;
+    private HashMap<String,Integer> stat_blue;
+    private HashMap<String,Integer> stat_red;
+    private HashMap<String,Float> move_blue;
+    private HashMap<String,Float> move_red;
+    private ArrayList<HashMap<String,Object>> blueSeq;
+    private ArrayList<HashMap<String,Object>> redSeq;
+    private Boolean blueServe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +59,11 @@ public class SubExoPlayer extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setBar();
-//        setViewModel();
         prepInfo();
         initFrag();
         setURL();
         initPlayer();
         setMainTab();
-//        setMoveTab();
 
         player.setPlayWhenReady(true);
 //        Log.d("Status: ","Started");
@@ -69,6 +71,7 @@ public class SubExoPlayer extends AppCompatActivity {
 
     protected void onResume() {         //restore player state after orientation
         super.onResume();
+        setPlayerMsg();
         player.seekTo(currentTime);
     }
 
@@ -84,6 +87,15 @@ public class SubExoPlayer extends AppCompatActivity {
 //        Log.d("State: ","Stopped");
     }
 
+    public void onBackPressed() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void setBar(){
         MaterialToolbar bar = findViewById(R.id.bar_exo);
         bar.setNavigationOnClickListener(v -> finish());
@@ -92,45 +104,96 @@ public class SubExoPlayer extends AppCompatActivity {
         //get data from prev. activity
         Intent intent = this.getIntent();
         vid = intent.getStringExtra("id");
-        sect = intent.getStringExtra("sect");
-        pred_up = intent.getStringArrayListExtra("pred_up");
-        pred_down = intent.getStringArrayListExtra("pred_down");
-        stat = intent.getStringArrayListExtra("stat");
+        game = intent.getIntExtra("game",-1);
+        score = intent.getIntExtra("score",-1);
+        prepFrameInfo(intent);
+        prepSeq(intent);
+        prepStat(intent);
+        prepMove(intent);
+    }
 
-        //only generate statistic & movement once
-        isPlot_move =false;
-        isPlot_stat =false;
+    private void prepFrameInfo(Intent intent){
+
+        HashMap<String, ArrayList<HashMap<String,Object>>> fData =
+                (HashMap<String, ArrayList<HashMap<String,Object>>>) intent.getSerializableExtra("frame info");
+
+        /**
+         * @param eachFrameInfo
+         * key:{frame, moveType, ballType, isBlueServe}
+         */
+
+        eachFrameInfo = fData.get("info");
+        transformFrameInfo(eachFrameInfo); //frame number to millisecond
+    }
+
+    private void transformFrameInfo(ArrayList<HashMap<String, Object>> mapArr){
+        blueServe = (Boolean) mapArr.get(0).get("isBlueServe");
+
+        for(HashMap<String, Object> map : mapArr){
+            DecimalFormat df = new DecimalFormat("####0.000");
+            double d =Double.valueOf(df.format((Integer)map.get("midFrame")/ 10.0))*1000 - 500;
+            map.put("midFrame", (long)d );
+            d =Double.valueOf(df.format((Integer)map.get("startFrame")/ 10.0))*1000 - 500;
+            map.put("startFrame", (long)d );
+
+        }
+
+    }
+
+
+    private void prepSeq(Intent intent){
+        HashMap<String, ArrayList<HashMap<String,Object>>> twoPlayerData =
+                (HashMap<String, ArrayList<HashMap<String,Object>>>) intent.getSerializableExtra("shot list");
+
+        blueSeq = twoPlayerData.get("blue");
+        redSeq = twoPlayerData.get("red");
+
+        pred_blue = new ArrayList<>();
+        pred_red = new ArrayList<>();
+
+        for(HashMap<String,Object> map : blueSeq){
+            pred_blue.add((String) map.get("type"));
+        }
+
+        for(HashMap<String,Object> map : redSeq){
+            pred_red.add((String) map.get("type"));
+        }
+
+    }
+
+    private void prepStat(Intent intent){
+        HashMap<String,HashMap<String,Integer>> twoPlayerData =
+                (HashMap<String, HashMap<String, Integer>>) intent.getSerializableExtra("type dict");
+
+        stat_blue = twoPlayerData.get("blue");
+        stat_red = twoPlayerData.get("red");
+    }
+
+    private void prepMove(Intent intent){
+        HashMap<String,HashMap<String,Float>> twoPlayerData =
+                (HashMap<String, HashMap<String, Float>>) intent.getSerializableExtra("move dict");
+        move_blue = twoPlayerData.get("blue");
+        move_red = twoPlayerData.get("red");
     }
 
     private void setURL(){
         String base = BuildConfig.SVR_IP;      //res location in server
-        //dev. setting
-        vid = "n8JTt1yTXAE";
-        //
-        sect = "0";
-        //
-        url = base + vid + '/' + sect;
-        url += ".mp4";
+        String scoreFolder = "/scores/game_" + game + "_score_" + score + "/";
+        String filename = "video.mp4";
+        url = base + vid + scoreFolder + filename;
         Log.d("URL: ",url);
     }
 
-    //bind with View model
-    private void setViewModel(){
-
-//        model = new ViewModelProvider(this).get(FragmentViewModel.class);
-        //real data is from our model
-        //no! dataflow: Exoplayer->click section->send api to get data-> start sub exo with bundle
-    }
 
     private void initFrag(){
-        SequenceFragment f1 = SequenceFragment.newInstance(pred_up,pred_down);
+        SequenceFragment f1 = SequenceFragment.newInstance(pred_blue, pred_red, blueServe);
         fragList = new ArrayList<>();
         fragList.add(f1);
 
-        MovementFragment f2 = new MovementFragment();
+        MovementFragment f2 = MovementFragment.newInstance(move_blue, move_red);
         fragList.add(f2);
 
-        StatisticFragment f3 = new StatisticFragment();
+        StatisticFragment f3 = StatisticFragment.newInstance(stat_blue, stat_red);
         fragList.add(f3);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -148,9 +211,6 @@ public class SubExoPlayer extends AppCompatActivity {
         TabLayout tLayout = findViewById(R.id.tab_main);
         FragmentManager fm = getSupportFragmentManager();
 
-        //????
-//        if(tLayout.getTabCount()>=2) return;
-
         //1.Set listener
         tLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -159,9 +219,6 @@ public class SubExoPlayer extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.show(fragList.get(tab.getPosition()));
                 ft.commit();
-                if(tab.getPosition() == 0) {}
-                else if(tab.getPosition() == 1){setMoveFrag();}
-                else{setStatFrag();}
             }
 
             @Override
@@ -186,34 +243,20 @@ public class SubExoPlayer extends AppCompatActivity {
         tLayout.getTabAt(0).select();
     }
 
-    private void setMoveTab(){
-
-    }
-
-    private void setMoveFrag(){
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment frag = fm.findFragmentByTag("f_move");
-        if(frag != null && !isPlot_move) {
-            //to-do change
-//            ((TextView)frag.getView().findViewById(R.id.statText)).setText(stat.get(0));
-        }
-    }
-
-    private void setStatFrag(){
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment frag = fm.findFragmentByTag("f_stat");
-        if(frag != null && !isPlot_stat) {
-            //to-do change
-//            ((TextView)frag.getView().findViewById(R.id.statText)).setText(stat.get(0));
-        }
-    }
-
     private void initPlayer(){
         player = new com.google.android.exoplayer2.ExoPlayer.Builder(this).build();
         playerView = findViewById(R.id.exo_viewer);
-        playerView.setControllerOnFullScreenModeChangedListener(
+        playerView.setFullscreenButtonClickListener(
                 isFullScreen -> {
                     // Handle transition to/from fullscreen
+                    int orientation = getResources().getConfiguration().orientation;
+                    if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    }
+                    else{
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
+
                 });
         playerView.setPlayer(player);
 
@@ -232,5 +275,125 @@ public class SubExoPlayer extends AppCompatActivity {
         playerView.onPause();
         player.release();
     }
+
+
+    private void setPlayerMsg(){
+        postFrameMsg();
+        postEndMsg();
+    }
+
+    private void postFrameMsg(){
+
+//        Log.d("TAG", player.getCurrentPosition() + "");
+        for(HashMap<String, Object> frameMap : eachFrameInfo){
+            int idx = (int) frameMap.get("index");
+            long startTime = (long) frameMap.get("startFrame");
+            long midTime = (long) frameMap.get("midFrame");
+            String ball = (String) frameMap.get("ballType");
+            String move = (String) frameMap.get("moveType");
+            boolean isBlueServe = (Boolean) frameMap.get("isBlueServe");
+
+            sendSeqMsg(midTime,idx, isBlueServe);
+            sendMoveMsg(startTime, move, isBlueServe, game); //serve player 與 move player 相反
+        }
+
+    }
+
+    private void sendSeqMsg(long time, int idxShotList, Boolean isBluePlayerServed){
+
+        player.createMessage((messageType, payload) -> updateSeqRecycler(time, idxShotList, isBluePlayerServed))
+                .setPosition(time)
+                .setLooper(this.getMainLooper())
+                .send();
+    }
+
+    private void updateSeqRecycler(long time, int idx, Boolean isBluePlayerServed){
+        SequenceFragment seqFrag = (SequenceFragment) fragList.get(0);
+        seqFrag.makeAllSeqBlack();
+
+        /*
+        blue serve    -----  idx of this shot in shot list
+        blue recycler:  0 -> 2 -> ...  ( idx % 2 == 0 )
+        red recycler:   1 -> 3 -> ...  ( idx % 2 == 1 )
+
+        red serve
+        blue recycler:  1 -> 3 -> ...
+        red recycler:   0 -> 2 -> ...
+         */
+
+        int pos;
+
+        pos = idx / 2;
+        seqFrag.updateCurrentSeq(pos, isBluePlayerServed);
+
+        //repeatedly register event
+        sendSeqMsg(time, idx, isBluePlayerServed);
+    }
+
+
+    private void sendMoveMsg(long time, String moveType, Boolean bluePlayerServeFirst, int game){
+
+        player.createMessage((messageType, payload) -> updateMovePanel(time, moveType, bluePlayerServeFirst, game))
+                .setPosition(time)
+                .setLooper(this.getMainLooper())
+                .send();
+    }
+
+    private void updateMovePanel(long time, String moveType, Boolean isBluePlayerServed, int game){
+        MovementFragment moveFrag = (MovementFragment) fragList.get(1);
+        moveFrag.getBlueFrag().showAllView(false);
+        moveFrag.getRedFrag().showAllView(false);
+
+        if(isBluePlayerServed) {
+            moveFrag.getRedFrag().setCurrentTimeData(moveType);
+        }
+        else{
+            moveFrag.getBlueFrag().setCurrentTimeData(moveType);
+        }
+
+        //repeatedly register event
+        sendMoveMsg(time, moveType, isBluePlayerServed, game);
+    }
+
+    private void testFunc(String moveType){
+        MovementFragment moveFrag = (MovementFragment) fragList.get(1);
+        moveFrag.getBlueFrag().showAllView(false);
+        moveFrag.getRedFrag().showAllView(false);
+        moveFrag.getBlueFrag().setCurrentTimeData(moveType);
+
+        //
+        postFrameMsg();
+    }
+
+    private void postEndMsg(){
+        long time = player.getDuration();
+        player.createMessage(
+                        (messageType, payload) -> showGlobalData())
+                .setPosition(time)
+                .setLooper(this.getMainLooper())
+                .send();
+
+
+    }
+
+    private void showGlobalData(){
+//        Log.d("TAG", "Show Global");
+        //1.sequence frag
+        SequenceFragment seqFrag = (SequenceFragment) fragList.get(0);
+        seqFrag.restoreAllSeq();
+//        seqFrag
+
+        //2.movement frag
+        MovementFragment moveFrag = (MovementFragment) fragList.get(1);
+        moveFrag.getBlueFrag().showAllView(true);
+        moveFrag.getRedFrag().showAllView(true);
+
+        //3.
+
+        //register again
+        postEndMsg();
+    }
+
+
 
 }
